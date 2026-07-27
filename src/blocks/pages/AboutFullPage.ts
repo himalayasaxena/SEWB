@@ -1,0 +1,138 @@
+import type { Block } from 'payload'
+
+const impactTabFields = [
+  { name: 'label', type: 'text' as const, required: true },
+  { name: 'title', type: 'text' as const, required: true },
+  { name: 'copy', type: 'textarea' as const, required: true },
+  { name: 'name', type: 'text' as const },
+  { name: 'role', type: 'text' as const },
+  { name: 'statLabel', type: 'text' as const },
+  { name: 'statValue', type: 'text' as const },
+  { name: 'bottom', type: 'text' as const },
+  { name: 'defaultActive', type: 'checkbox' as const, defaultValue: false },
+]
+
+export const AboutFullPage: Block = {
+  slug: 'aboutFullPage',
+  interfaceName: 'AboutFullPageBlock',
+  labels: { singular: 'About — Full page', plural: 'About full page' },
+  fields: [
+    {
+      name: 'hero',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'badge', type: 'text' },
+        { name: 'titleHighlight', type: 'text' },
+        { name: 'titleRest', type: 'text', required: true },
+        { name: 'subtitle', type: 'textarea' },
+        {
+          name: 'tags',
+          type: 'array',
+          labels: { singular: 'Tag', plural: 'Tags' },
+          fields: [{ name: 'text', type: 'text', required: true }],
+        },
+        { name: 'image', type: 'upload', relationTo: 'media' },
+      ],
+    },
+    {
+      name: 'journey',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'badge', type: 'text' },
+        { name: 'titlePrefix', type: 'text', required: true },
+        { name: 'titleHighlight', type: 'text' },
+        { name: 'subtitle', type: 'textarea' },
+        { name: 'leftImage', type: 'upload', relationTo: 'media' },
+        { name: 'centerImage', type: 'upload', relationTo: 'media' },
+        { name: 'rightImage', type: 'upload', relationTo: 'media' },
+        { name: 'missionLabel', type: 'text', defaultValue: 'MISSION' },
+        { name: 'missionText', type: 'textarea' },
+        { name: 'visionLabel', type: 'text', defaultValue: 'VISION' },
+        { name: 'visionText', type: 'textarea' },
+      ],
+    },
+    {
+      name: 'why',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'badge', type: 'text' },
+        { name: 'titlePrefix', type: 'text', required: true },
+        { name: 'titleHighlight', type: 'text' },
+        { name: 'subtitle', type: 'textarea' },
+        { name: 'image', type: 'upload', relationTo: 'media' },
+      ],
+    },
+    {
+      name: 'impact',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'badge', type: 'text' },
+        { name: 'title', type: 'text', required: true },
+        { name: 'subtitle', type: 'textarea' },
+        {
+          name: 'tabs',
+          type: 'array',
+          minRows: 1,
+          labels: { singular: 'Impact tab', plural: 'Impact tabs' },
+          fields: impactTabFields,
+        },
+        { name: 'networkImage', type: 'upload', relationTo: 'media' },
+        { name: 'baseImage', type: 'upload', relationTo: 'media' },
+        { name: 'doctorImage', type: 'upload', relationTo: 'media' },
+        { name: 'avatarImage', type: 'upload', relationTo: 'media' },
+        { name: 'chatImage', type: 'upload', relationTo: 'media' },
+        { name: 'barChartImage', type: 'upload', relationTo: 'media' },
+        { name: 'circleImage', type: 'upload', relationTo: 'media' },
+        { name: 'linkLabel', type: 'text', defaultValue: 'View More' },
+        { name: 'linkHref', type: 'text', defaultValue: '#' },
+      ],
+    },
+    {
+      name: 'founders',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'badge', type: 'text' },
+        { name: 'titlePrefix', type: 'text', required: true },
+        { name: 'titleHighlight', type: 'text' },
+        { name: 'subtitle', type: 'textarea' },
+        {
+          name: 'members',
+          type: 'array',
+          minRows: 1,
+          labels: { singular: 'Founder', plural: 'Founders' },
+          fields: [
+            { name: 'image', type: 'upload', relationTo: 'media' },
+            { name: 'name', type: 'text', required: true },
+            { name: 'role', type: 'text' },
+            { name: 'linkedin', type: 'text' },
+            { name: 'twitter', type: 'text' },
+            { name: 'emailHref', type: 'text' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'faq',
+      type: 'group',
+      required: true,
+      fields: [
+        { name: 'heading', type: 'text', defaultValue: 'FAQs' },
+        {
+          name: 'items',
+          type: 'array',
+          minRows: 1,
+          labels: { singular: 'FAQ item', plural: 'FAQ items' },
+          fields: [
+            { name: 'question', type: 'text', required: true },
+            { name: 'answer', type: 'textarea', required: true },
+          ],
+        },
+      ],
+    },
+  ],
+}

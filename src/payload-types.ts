@@ -67,8 +67,13 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    pages: Page;
     media: Media;
+    posts: Post;
+    categories: Category;
+    tags: Tag;
+    users: User;
+    'form-submissions': FormSubmission;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,8 +81,13 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
+    'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -87,8 +97,18 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    site: Site;
+    header: Header;
+    footer: Footer;
+    'blog-settings': BlogSetting;
+  };
+  globalsSelect: {
+    site: SiteSelect<false> | SiteSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'blog-settings': BlogSettingsSelect<false> | BlogSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -119,10 +139,1599 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  title: string;
+  /**
+   * Fixed route key — cannot be changed. Use "home" for the homepage. URLs have no leading/trailing slash.
+   */
+  slug: string;
+  /**
+   * Optional block sections. Static marketing pages can use SEO fields only; editors create a Page per route slug (e.g. about, contact) for metadata.
+   */
+  layout?:
+    | (
+        | AboutFullPageBlock
+        | MedicalDisclaimerFullPageBlock
+        | ContactFullPageBlock
+        | FeaturesFullPageBlock
+        | HealthProHeroBlock
+        | HealthProToolsBlock
+        | HealthProBenefitsBlock
+        | HealthProOnboardingBlock
+        | HealthProSecurityBlock
+        | HealthProPatientControlBlock
+        | HealthProAppCtaBlock
+        | HealthProFaqBlock
+        | IndHeroBlock
+        | IndToolsBlock
+        | IndProcessShowcaseBlock
+        | IndBenefitsBlock
+        | IndSimpleStepsBlock
+        | IndAiSearchBlock
+        | IndAllInOneBlock
+        | IndVoicesBlock
+        | IndFaqBlock
+        | BannerSliderBlock
+        | CommonHeroBlock
+        | SectionIntroBlock
+        | HomeInfrastructureBlock
+        | HomeHighlightsBlock
+        | HomePrivacyBlock
+        | HomeAppDownloadBlock
+        | HomeFaqBlock
+        | OrgHeroBlock
+        | OrgLabSolutionsBlock
+        | OrgPharmacySolutionsBlock
+        | OrgProcessStepsBlock
+        | OrgSecureReportsBlock
+        | OrgFeatureGridBlock
+        | OrgAppCtaBlock
+        | OrgEnterpriseDashboardBlock
+        | OrgFaqBlock
+        | SecurityHeroBlock
+        | SecuritySafetyBlock
+        | SecurityArchitectureBlock
+        | SecurityThreatBlock
+        | SecurityBackupBlock
+        | SecurityAuditBlock
+        | SecurityAppCtaBlock
+        | SecurityFaqBlock
+        | BlogHeroBlock
+        | BlogIndexFeedBlock
+        | TestimonialHeroBlock
+        | TestimonialCarouselBlock
+        | GalleryFullPageBlock
+      )[]
+    | null;
+  /**
+   * Shown in browser tabs and search results. Aim for ~60 characters.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short summary for Google and social shares. Aim for ~150–160 characters.
+   */
+  seoDescription?: string | null;
+  /**
+   * Optional full URL override. Leave blank to use the default page URL.
+   */
+  canonicalUrl?: string | null;
+  /**
+   * Adds noindex/nofollow so this URL is not indexed.
+   */
+  noIndex?: boolean | null;
+  /**
+   * Open Graph / Twitter card image. Falls back to the featured image on blog posts.
+   */
+  ogImage?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutFullPageBlock".
+ */
+export interface AboutFullPageBlock {
+  hero: {
+    badge?: string | null;
+    titleHighlight?: string | null;
+    titleRest: string;
+    subtitle?: string | null;
+    tags?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (string | null) | Media;
+  };
+  journey: {
+    badge?: string | null;
+    titlePrefix: string;
+    titleHighlight?: string | null;
+    subtitle?: string | null;
+    leftImage?: (string | null) | Media;
+    centerImage?: (string | null) | Media;
+    rightImage?: (string | null) | Media;
+    missionLabel?: string | null;
+    missionText?: string | null;
+    visionLabel?: string | null;
+    visionText?: string | null;
+  };
+  why: {
+    badge?: string | null;
+    titlePrefix: string;
+    titleHighlight?: string | null;
+    subtitle?: string | null;
+    image?: (string | null) | Media;
+  };
+  impact: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    tabs?:
+      | {
+          label: string;
+          title: string;
+          copy: string;
+          name?: string | null;
+          role?: string | null;
+          statLabel?: string | null;
+          statValue?: string | null;
+          bottom?: string | null;
+          defaultActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    networkImage?: (string | null) | Media;
+    baseImage?: (string | null) | Media;
+    doctorImage?: (string | null) | Media;
+    avatarImage?: (string | null) | Media;
+    chatImage?: (string | null) | Media;
+    barChartImage?: (string | null) | Media;
+    circleImage?: (string | null) | Media;
+    linkLabel?: string | null;
+    linkHref?: string | null;
+  };
+  founders: {
+    badge?: string | null;
+    titlePrefix: string;
+    titleHighlight?: string | null;
+    subtitle?: string | null;
+    members?:
+      | {
+          image?: (string | null) | Media;
+          name: string;
+          role?: string | null;
+          linkedin?: string | null;
+          twitter?: string | null;
+          emailHref?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  faq: {
+    heading?: string | null;
+    items?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutFullPage';
+}
+/**
+ * Upload images and PDFs used across pages, blog, and globals.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MedicalDisclaimerFullPageBlock".
+ */
+export interface MedicalDisclaimerFullPageBlock {
+  hero: {
+    badge?: string | null;
+    title: string;
+    titleHighlight?: string | null;
+    subtitle?: string | null;
+    sideImage?: (string | null) | Media;
+  };
+  sectionGlowImage?: (string | null) | Media;
+  cards?:
+    | {
+        variant?: ('default' | 'important') | null;
+        icon?: (string | null) | Media;
+        heading: string;
+        paragraphs?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  quote: {
+    line1: string;
+    line2Lead?: string | null;
+    line2Bold?: string | null;
+    /**
+     * Optional text after the bold span.
+     */
+    line2Trail?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'medicalDisclaimerFullPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFullPageBlock".
+ */
+export interface ContactFullPageBlock {
+  hero: {
+    badge?: string | null;
+    titleLine1: string;
+    titleHighlight?: string | null;
+    subtitle?: string | null;
+    tags?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (string | null) | Media;
+  };
+  intro: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+  };
+  officeCard: {
+    title: string;
+    address: string;
+    icon?: (string | null) | Media;
+  };
+  reachCard: {
+    icon?: (string | null) | Media;
+    emailTitle: string;
+    email: string;
+    phoneTitle: string;
+    phone: string;
+  };
+  social: {
+    title: string;
+    links?:
+      | {
+          href: string;
+          label: string;
+          icon?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form: {
+    title: string;
+  };
+  map: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    embedUrl: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactFullPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesFullPageBlock".
+ */
+export interface FeaturesFullPageBlock {
+  hero: {
+    badge?: string | null;
+    titleHighlight?: string | null;
+    titleRest: string;
+    subtitle?: string | null;
+    tags?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (string | null) | Media;
+  };
+  smartHealth: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    sideImage?: (string | null) | Media;
+    paragraph1: string;
+    paragraph2: string;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+    ctaArrowImage?: (string | null) | Media;
+  };
+  powerfulFeatures: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    cards?:
+      | {
+          icon?: (string | null) | Media;
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  realWorld: {
+    pillLabel?: string | null;
+    pillIconClass?: string | null;
+    title: string;
+    subtitle?: string | null;
+    steps?:
+      | {
+          iconClass: string;
+          title: string;
+          body: string;
+          aosDelay?: number | null;
+          id?: string | null;
+        }[]
+      | null;
+    sideImage?: (string | null) | Media;
+    floatCardTitle?: string | null;
+    floatCardSubtitle?: string | null;
+  };
+  secureData: {
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    image?: (string | null) | Media;
+    paragraph1: string;
+    paragraph2: string;
+    items?:
+      | {
+          icon?: (string | null) | Media;
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  healthTracking: {
+    badge?: string | null;
+    titleLine1: string;
+    titleLine2?: string | null;
+    subtitle?: string | null;
+    productBackground?: (string | null) | Media;
+    trackImage?: (string | null) | Media;
+    overlayBadgeAi?: (string | null) | Media;
+    overlayBadgeAlert?: (string | null) | Media;
+    items?:
+      | {
+          icon?: (string | null) | Media;
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  appSection: {
+    backgroundImage?: (string | null) | Media;
+    badge?: string | null;
+    title: string;
+    bullets?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    mockupImage?: (string | null) | Media;
+  };
+  faq: {
+    heading?: string | null;
+    items?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuresFullPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProHeroBlock".
+ */
+export interface HealthProHeroBlock {
+  badge?: string | null;
+  titleLine1: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  tags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProToolsBlock".
+ */
+export interface HealthProToolsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  cardDecor?: (string | null) | Media;
+  cards?:
+    | {
+        icon?: (string | null) | Media;
+        pillLabel?: string | null;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProTools';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProBenefitsBlock".
+ */
+export interface HealthProBenefitsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        image?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProBenefits';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProOnboardingBlock".
+ */
+export interface HealthProOnboardingBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  steps?:
+    | {
+        stepNumberImage?: (string | null) | Media;
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProOnboarding';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProSecurityBlock".
+ */
+export interface HealthProSecurityBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProSecurity';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProPatientControlBlock".
+ */
+export interface HealthProPatientControlBlock {
+  badge?: string | null;
+  /**
+   * Title text before the pink gradient span.
+   */
+  titleBeforeHighlight: string;
+  /**
+   * Rendered with highlight-pink gradient styling.
+   */
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  columnImage?: (string | null) | Media;
+  features?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProPatientControl';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProAppCtaBlock".
+ */
+export interface HealthProAppCtaBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  bullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  mockupImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProAppCta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProFaqBlock".
+ */
+export interface HealthProFaqBlock {
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'healthProFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndHeroBlock".
+ */
+export interface IndHeroBlock {
+  badge?: string | null;
+  titleHighlight: string;
+  titleRest: string;
+  subtitle?: string | null;
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndToolsBlock".
+ */
+export interface IndToolsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indTools';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndProcessShowcaseBlock".
+ */
+export interface IndProcessShowcaseBlock {
+  badge?: string | null;
+  titleBeforeHighlight: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  steps?:
+    | {
+        image?: (string | null) | Media;
+        title: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indProcessShowcase';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndBenefitsBlock".
+ */
+export interface IndBenefitsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  mainImage?: (string | null) | Media;
+  floatingCard: {
+    icon?: (string | null) | Media;
+    title: string;
+    subtitle?: string | null;
+  };
+  items?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indBenefits';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndSimpleStepsBlock".
+ */
+export interface IndSimpleStepsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  steps?:
+    | {
+        stepNumberImage?: (string | null) | Media;
+        /**
+         * e.g. one — applied to first step img
+         */
+        stepNumberImageClass?: string | null;
+        icon?: (string | null) | Media;
+        iconWidth?: number | null;
+        iconHeight?: number | null;
+        title: string;
+        descriptionLine1: string;
+        descriptionLine2?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indSimpleSteps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndAiSearchBlock".
+ */
+export interface IndAiSearchBlock {
+  metaRatingIcon?: (string | null) | Media;
+  metaPremiumIcon?: (string | null) | Media;
+  metaClockIcon?: (string | null) | Media;
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  symptomInputIcon?: (string | null) | Media;
+  locationInputIcon?: (string | null) | Media;
+  symptomPlaceholder: string;
+  locationPlaceholder: string;
+  searchButtonLabel?: string | null;
+  tabs?:
+    | {
+        label: string;
+        paneId: string;
+        defaultActive?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  panes?:
+    | {
+        paneId: string;
+        /**
+         * Bootstrap cols per card, e.g. col-lg-4 col-sm-6
+         */
+        columnClass?: string | null;
+        doctors?:
+          | {
+              photo?: (string | null) | Media;
+              name: string;
+              specialty: string;
+              ratingScore: string;
+              ratingCount: string;
+              experienceText: string;
+              availabilityText: string;
+              nextAvailableTime: string;
+              bookHref: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indAiSearch';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndAllInOneBlock".
+ */
+export interface IndAllInOneBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  sideImage?: (string | null) | Media;
+  cards?:
+    | {
+        decorImage?: (string | null) | Media;
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        listItems?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        learnMoreHref: string;
+        learnMoreArrowImage?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indAllInOne';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndVoicesBlock".
+ */
+export interface IndVoicesBlock {
+  backgroundShapeImage?: (string | null) | Media;
+  testimonialStarIcon?: (string | null) | Media;
+  badge?: string | null;
+  titleBeforeHighlight: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  testimonials?:
+    | {
+        avatar?: (string | null) | Media;
+        quote: string;
+        name: string;
+        specialty: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indVoices';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndFaqBlock".
+ */
+export interface IndFaqBlock {
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'indFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerSliderBlock".
+ */
+export interface BannerSliderBlock {
+  slides?:
+    | {
+        backgroundImage: string | Media;
+        pretitle?: string | null;
+        title: string;
+        subtitle?: string | null;
+        primaryCta?: {
+          label?: string | null;
+          href?: string | null;
+        };
+        secondaryCta?: {
+          label?: string | null;
+          href?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'bannerSlider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommonHeroBlock".
+ */
+export interface CommonHeroBlock {
+  badge?: string | null;
+  title: string;
+  /**
+   * Rendered inside the title with existing highlight styling.
+   */
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  sideImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'commonHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionIntroBlock".
+ */
+export interface SectionIntroBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'sectionIntro';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeInfrastructureBlock".
+ */
+export interface HomeInfrastructureBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  tab1Label?: string | null;
+  tab2Label?: string | null;
+  tab1: {
+    heading: string;
+    description?: string | null;
+    bullets?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (string | null) | Media;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+  };
+  tab2: {
+    heading: string;
+    description?: string | null;
+    bullets?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (string | null) | Media;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeInfrastructure';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHighlightsBlock".
+ */
+export interface HomeHighlightsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        icon?: (string | null) | Media;
+        titleTop: string;
+        titleBottom?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomePrivacyBlock".
+ */
+export interface HomePrivacyBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  sideImage?: (string | null) | Media;
+  features?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homePrivacy';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeAppDownloadBlock".
+ */
+export interface HomeAppDownloadBlock {
+  backgroundImage?: (string | null) | Media;
+  badge?: string | null;
+  titleLine1: string;
+  titleLine2?: string | null;
+  paragraphs?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  emphasisLine?: string | null;
+  mockupImage?: (string | null) | Media;
+  secondaryMockupImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeAppDownload';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeFaqBlock".
+ */
+export interface HomeFaqBlock {
+  heading: string;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'homeFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgHeroBlock".
+ */
+export interface OrgHeroBlock {
+  badge?: string | null;
+  titleLine1: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  tags?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgLabSolutionsBlock".
+ */
+export interface OrgLabSolutionsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  cards?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgLabSolutions';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgPharmacySolutionsBlock".
+ */
+export interface OrgPharmacySolutionsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  sideImage?: (string | null) | Media;
+  features?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        descriptionLine1: string;
+        descriptionLine2?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgPharmacySolutions';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgProcessStepsBlock".
+ */
+export interface OrgProcessStepsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  steps?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgProcessSteps';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgSecureReportsBlock".
+ */
+export interface OrgSecureReportsBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  features?:
+    | {
+        iconLayout?: ('default' | 'aiBox') | null;
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  mockupImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgSecureReports';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgFeatureGridBlock".
+ */
+export interface OrgFeatureGridBlock {
+  badge?: string | null;
+  titlePrefix: string;
+  titleSpan?: string | null;
+  subtitle?: string | null;
+  cards?:
+    | {
+        stepIcon?: (string | null) | Media;
+        stepDecoration?: ('none' | 'tick' | 'dot') | null;
+        tickImage?: (string | null) | Media;
+        title: string;
+        description: string;
+        timeIcon?: (string | null) | Media;
+        timeText: string;
+        statusVariant: 'completed' | 'progress' | 'pending';
+        statusLabel: string;
+        detailLines?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgFeatureGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgAppCtaBlock".
+ */
+export interface OrgAppCtaBlock {
+  backgroundImage?: (string | null) | Media;
+  badge?: string | null;
+  title: string;
+  bullets?:
+    | {
+        title: string;
+        id?: string | null;
+      }[]
+    | null;
+  mockupImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgAppCta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgEnterpriseDashboardBlock".
+ */
+export interface OrgEnterpriseDashboardBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  dashboardImage?: (string | null) | Media;
+  quickInsightsBadge?: (string | null) | Media;
+  aiInsightsBadge?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgEnterpriseDashboard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgFaqBlock".
+ */
+export interface OrgFaqBlock {
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'orgFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityHeroBlock".
+ */
+export interface SecurityHeroBlock {
+  badge?: string | null;
+  title: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  tags?:
+    | {
+        /**
+         * Font Awesome classes, e.g. fas fa-shield-alt
+         */
+        iconClass?: string | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  sideImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecuritySafetyBlock".
+ */
+export interface SecuritySafetyBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  mainImage?: (string | null) | Media;
+  dnaOverlayImage?: (string | null) | Media;
+  shieldBgImage?: (string | null) | Media;
+  shieldIconImage?: (string | null) | Media;
+  tagIconImage?: (string | null) | Media;
+  tagHeading?: string | null;
+  tagSubheading?: string | null;
+  features?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securitySafety';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityArchitectureBlock".
+ */
+export interface SecurityArchitectureBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  items?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  sideImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityArchitecture';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityThreatBlock".
+ */
+export interface SecurityThreatBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  backgroundImage?: (string | null) | Media;
+  centerImage?: (string | null) | Media;
+  alertIcon?: (string | null) | Media;
+  alertTitle?: string | null;
+  alertSubtitle?: string | null;
+  items?:
+    | {
+        icon?: (string | null) | Media;
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityThreat';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityBackupBlock".
+ */
+export interface SecurityBackupBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  steps?:
+    | {
+        icon?: (string | null) | Media;
+        stepBadge?: string | null;
+        title: string;
+        description: string;
+        layoutVariant?: ('default' | 'itemDown') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityBackup';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityAuditBlock".
+ */
+export interface SecurityAuditBlock {
+  badge?: string | null;
+  title: string;
+  subtitle?: string | null;
+  image?: (string | null) | Media;
+  loggingTitle: string;
+  loggingItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  stats?:
+    | {
+        value: string;
+        label: string;
+        alignVariant?: ('default' | 'centered') | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaLabel?: string | null;
+  /**
+   * URL or # for placeholder.
+   */
+  ctaHref?: string | null;
+  ctaArrowIcon?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityAudit';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityAppCtaBlock".
+ */
+export interface SecurityAppCtaBlock {
+  badge?: string | null;
+  title: string;
+  bullets?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  mockupImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityAppCta';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityFaqBlock".
+ */
+export interface SecurityFaqBlock {
+  heading?: string | null;
+  items?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'securityFaq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogHeroBlock".
+ */
+export interface BlogHeroBlock {
+  badge?: string | null;
+  title: string;
+  titleHighlight?: string | null;
+  subtitle?: string | null;
+  tags?:
+    | {
+        /**
+         * Optional FA classes, e.g. fas fa-check-circle
+         */
+        iconClass?: string | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  sideImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogIndexFeedBlock".
+ */
+export interface BlogIndexFeedBlock {
+  /**
+   * Left column badge (featured area).
+   */
+  featuredTag?: string | null;
+  featuredSubtitle?: string | null;
+  popularTag?: string | null;
+  popularSubtitle?: string | null;
+  recentTag?: string | null;
+  recentSubtitle?: string | null;
+  /**
+   * Optional decorative asset beside “Recently Posted” (defaults to site asset).
+   */
+  decorativeImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogIndexFeed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialHeroBlock".
+ */
+export interface TestimonialHeroBlock {
+  badge?: string | null;
+  titleLine1: string;
+  titleHighlight?: string | null;
+  /**
+   * Text after the highlighted span (e.g. “From Our Users”).
+   */
+  titleLine2?: string | null;
+  subtitle?: string | null;
+  sideImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonialHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialCarouselBlock".
+ */
+export interface TestimonialCarouselBlock {
+  variant: 'patients' | 'professionals';
+  ratingStarIcon?: (string | null) | Media;
+  badge?: string | null;
+  heading: string;
+  items?:
+    | {
+        avatar?: (string | null) | Media;
+        quote: string;
+        name: string;
+        specialty: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonialCarousel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryFullPageBlock".
+ */
+export interface GalleryFullPageBlock {
+  hero: {
+    badge?: string | null;
+    titlePrefix: string;
+    titleHighlight?: string | null;
+    titleSuffix?: string | null;
+    subtitle?: string | null;
+    image?: (string | null) | Media;
+  };
+  gallery: {
+    shapeImage?: (string | null) | Media;
+    badge?: string | null;
+    title: string;
+    subtitle?: string | null;
+    locationIcon?: (string | null) | Media;
+    clockIcon?: (string | null) | Media;
+    cards?:
+      | {
+          image?: (string | null) | Media;
+          imageAlt?: string | null;
+          tag?: string | null;
+          title: string;
+          location?: string | null;
+          dateTime?: string | null;
+          description?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'galleryFullPage';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  title: string;
+  /**
+   * Auto-generated from title. You can still edit if needed.
+   */
+  slug: string;
+  publishedAt?: string | null;
+  featured?: boolean | null;
+  commentsEnabled?: boolean | null;
+  excerpt?: string | null;
+  featuredImage?: (string | null) | Media;
+  /**
+   * Auto-filled from the logged-in user. Profile (name, photo, bio) is managed on the user account.
+   */
+  author?: (string | null) | User;
+  categories?: (string | Category)[] | null;
+  tags?: (string | Tag)[] | null;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Shown in browser tabs and search results. Aim for ~60 characters.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short summary for Google and social shares. Aim for ~150–160 characters.
+   */
+  seoDescription?: string | null;
+  /**
+   * Adds noindex/nofollow so this URL is not indexed.
+   */
+  noIndex?: boolean | null;
+  /**
+   * Open Graph / Twitter card image. Falls back to the featured image on blog posts.
+   */
+  ogImage?: (string | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * CMS accounts double as blog authors — set profile photo, bio, and social links when creating users.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: string;
+  /**
+   * Public author name on the blog. Auto-filled from email if left empty.
+   */
+  displayName: string;
+  /**
+   * Circular avatar on blog author sections (recommended: square image).
+   */
+  photo?: (string | null) | Media;
+  /**
+   * Brief description shown in blog author sections.
+   */
+  bio?: string | null;
+  socialLinks?: {
+    facebook?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+    linkedin?: string | null;
+  };
+  /**
+   * Editors can manage blog posts and leads only.
+   */
+  roles: ('admin' | 'editor')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -143,23 +1752,53 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Manage blog categories used to classify posts.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "categories".
  */
-export interface Media {
+export interface Category {
   id: string;
-  alt: string;
+  title: string;
+  /**
+   * URL segment for /blog/category/[slug]
+   */
+  slug: string;
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
+}
+/**
+ * Manage tags used for filtering and SEO of blog posts.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  title: string;
+  /**
+   * URL segment for /blog/tag/[slug]
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "form-submissions".
+ */
+export interface FormSubmission {
+  id: string;
+  form: 'contact';
+  name?: string | null;
+  street?: string | null;
+  city?: string | null;
+  postCode?: string | null;
+  phone?: string | null;
+  email: string;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -186,12 +1825,32 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'users';
-        value: string | User;
+        relationTo: 'pages';
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: string | User;
+      } | null)
+    | ({
+        relationTo: 'form-submissions';
+        value: string | FormSubmission;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -237,9 +1896,1521 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  layout?:
+    | T
+    | {
+        aboutFullPage?: T | AboutFullPageBlockSelect<T>;
+        medicalDisclaimerFullPage?: T | MedicalDisclaimerFullPageBlockSelect<T>;
+        contactFullPage?: T | ContactFullPageBlockSelect<T>;
+        featuresFullPage?: T | FeaturesFullPageBlockSelect<T>;
+        healthProHero?: T | HealthProHeroBlockSelect<T>;
+        healthProTools?: T | HealthProToolsBlockSelect<T>;
+        healthProBenefits?: T | HealthProBenefitsBlockSelect<T>;
+        healthProOnboarding?: T | HealthProOnboardingBlockSelect<T>;
+        healthProSecurity?: T | HealthProSecurityBlockSelect<T>;
+        healthProPatientControl?: T | HealthProPatientControlBlockSelect<T>;
+        healthProAppCta?: T | HealthProAppCtaBlockSelect<T>;
+        healthProFaq?: T | HealthProFaqBlockSelect<T>;
+        indHero?: T | IndHeroBlockSelect<T>;
+        indTools?: T | IndToolsBlockSelect<T>;
+        indProcessShowcase?: T | IndProcessShowcaseBlockSelect<T>;
+        indBenefits?: T | IndBenefitsBlockSelect<T>;
+        indSimpleSteps?: T | IndSimpleStepsBlockSelect<T>;
+        indAiSearch?: T | IndAiSearchBlockSelect<T>;
+        indAllInOne?: T | IndAllInOneBlockSelect<T>;
+        indVoices?: T | IndVoicesBlockSelect<T>;
+        indFaq?: T | IndFaqBlockSelect<T>;
+        bannerSlider?: T | BannerSliderBlockSelect<T>;
+        commonHero?: T | CommonHeroBlockSelect<T>;
+        sectionIntro?: T | SectionIntroBlockSelect<T>;
+        homeInfrastructure?: T | HomeInfrastructureBlockSelect<T>;
+        homeHighlights?: T | HomeHighlightsBlockSelect<T>;
+        homePrivacy?: T | HomePrivacyBlockSelect<T>;
+        homeAppDownload?: T | HomeAppDownloadBlockSelect<T>;
+        homeFaq?: T | HomeFaqBlockSelect<T>;
+        orgHero?: T | OrgHeroBlockSelect<T>;
+        orgLabSolutions?: T | OrgLabSolutionsBlockSelect<T>;
+        orgPharmacySolutions?: T | OrgPharmacySolutionsBlockSelect<T>;
+        orgProcessSteps?: T | OrgProcessStepsBlockSelect<T>;
+        orgSecureReports?: T | OrgSecureReportsBlockSelect<T>;
+        orgFeatureGrid?: T | OrgFeatureGridBlockSelect<T>;
+        orgAppCta?: T | OrgAppCtaBlockSelect<T>;
+        orgEnterpriseDashboard?: T | OrgEnterpriseDashboardBlockSelect<T>;
+        orgFaq?: T | OrgFaqBlockSelect<T>;
+        securityHero?: T | SecurityHeroBlockSelect<T>;
+        securitySafety?: T | SecuritySafetyBlockSelect<T>;
+        securityArchitecture?: T | SecurityArchitectureBlockSelect<T>;
+        securityThreat?: T | SecurityThreatBlockSelect<T>;
+        securityBackup?: T | SecurityBackupBlockSelect<T>;
+        securityAudit?: T | SecurityAuditBlockSelect<T>;
+        securityAppCta?: T | SecurityAppCtaBlockSelect<T>;
+        securityFaq?: T | SecurityFaqBlockSelect<T>;
+        blogHero?: T | BlogHeroBlockSelect<T>;
+        blogIndexFeed?: T | BlogIndexFeedBlockSelect<T>;
+        testimonialHero?: T | TestimonialHeroBlockSelect<T>;
+        testimonialCarousel?: T | TestimonialCarouselBlockSelect<T>;
+        galleryFullPage?: T | GalleryFullPageBlockSelect<T>;
+      };
+  seoTitle?: T;
+  seoDescription?: T;
+  canonicalUrl?: T;
+  noIndex?: T;
+  ogImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutFullPageBlock_select".
+ */
+export interface AboutFullPageBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?: T;
+        titleHighlight?: T;
+        titleRest?: T;
+        subtitle?: T;
+        tags?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  journey?:
+    | T
+    | {
+        badge?: T;
+        titlePrefix?: T;
+        titleHighlight?: T;
+        subtitle?: T;
+        leftImage?: T;
+        centerImage?: T;
+        rightImage?: T;
+        missionLabel?: T;
+        missionText?: T;
+        visionLabel?: T;
+        visionText?: T;
+      };
+  why?:
+    | T
+    | {
+        badge?: T;
+        titlePrefix?: T;
+        titleHighlight?: T;
+        subtitle?: T;
+        image?: T;
+      };
+  impact?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        tabs?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              copy?: T;
+              name?: T;
+              role?: T;
+              statLabel?: T;
+              statValue?: T;
+              bottom?: T;
+              defaultActive?: T;
+              id?: T;
+            };
+        networkImage?: T;
+        baseImage?: T;
+        doctorImage?: T;
+        avatarImage?: T;
+        chatImage?: T;
+        barChartImage?: T;
+        circleImage?: T;
+        linkLabel?: T;
+        linkHref?: T;
+      };
+  founders?:
+    | T
+    | {
+        badge?: T;
+        titlePrefix?: T;
+        titleHighlight?: T;
+        subtitle?: T;
+        members?:
+          | T
+          | {
+              image?: T;
+              name?: T;
+              role?: T;
+              linkedin?: T;
+              twitter?: T;
+              emailHref?: T;
+              id?: T;
+            };
+      };
+  faq?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MedicalDisclaimerFullPageBlock_select".
+ */
+export interface MedicalDisclaimerFullPageBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        titleHighlight?: T;
+        subtitle?: T;
+        sideImage?: T;
+      };
+  sectionGlowImage?: T;
+  cards?:
+    | T
+    | {
+        variant?: T;
+        icon?: T;
+        heading?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  quote?:
+    | T
+    | {
+        line1?: T;
+        line2Lead?: T;
+        line2Bold?: T;
+        line2Trail?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactFullPageBlock_select".
+ */
+export interface ContactFullPageBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?: T;
+        titleLine1?: T;
+        titleHighlight?: T;
+        subtitle?: T;
+        tags?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  intro?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+      };
+  officeCard?:
+    | T
+    | {
+        title?: T;
+        address?: T;
+        icon?: T;
+      };
+  reachCard?:
+    | T
+    | {
+        icon?: T;
+        emailTitle?: T;
+        email?: T;
+        phoneTitle?: T;
+        phone?: T;
+      };
+  social?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              href?: T;
+              label?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  form?:
+    | T
+    | {
+        title?: T;
+      };
+  map?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        embedUrl?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturesFullPageBlock_select".
+ */
+export interface FeaturesFullPageBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?: T;
+        titleHighlight?: T;
+        titleRest?: T;
+        subtitle?: T;
+        tags?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  smartHealth?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        sideImage?: T;
+        paragraph1?: T;
+        paragraph2?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+        ctaArrowImage?: T;
+      };
+  powerfulFeatures?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  realWorld?:
+    | T
+    | {
+        pillLabel?: T;
+        pillIconClass?: T;
+        title?: T;
+        subtitle?: T;
+        steps?:
+          | T
+          | {
+              iconClass?: T;
+              title?: T;
+              body?: T;
+              aosDelay?: T;
+              id?: T;
+            };
+        sideImage?: T;
+        floatCardTitle?: T;
+        floatCardSubtitle?: T;
+      };
+  secureData?:
+    | T
+    | {
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        image?: T;
+        paragraph1?: T;
+        paragraph2?: T;
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              id?: T;
+            };
+      };
+  healthTracking?:
+    | T
+    | {
+        badge?: T;
+        titleLine1?: T;
+        titleLine2?: T;
+        subtitle?: T;
+        productBackground?: T;
+        trackImage?: T;
+        overlayBadgeAi?: T;
+        overlayBadgeAlert?: T;
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              id?: T;
+            };
+      };
+  appSection?:
+    | T
+    | {
+        backgroundImage?: T;
+        badge?: T;
+        title?: T;
+        bullets?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        mockupImage?: T;
+      };
+  faq?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProHeroBlock_select".
+ */
+export interface HealthProHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleLine1?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProToolsBlock_select".
+ */
+export interface HealthProToolsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cardDecor?: T;
+  cards?:
+    | T
+    | {
+        icon?: T;
+        pillLabel?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProBenefitsBlock_select".
+ */
+export interface HealthProBenefitsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProOnboardingBlock_select".
+ */
+export interface HealthProOnboardingBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        stepNumberImage?: T;
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProSecurityBlock_select".
+ */
+export interface HealthProSecurityBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProPatientControlBlock_select".
+ */
+export interface HealthProPatientControlBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleBeforeHighlight?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  columnImage?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProAppCtaBlock_select".
+ */
+export interface HealthProAppCtaBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  bullets?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  mockupImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HealthProFaqBlock_select".
+ */
+export interface HealthProFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndHeroBlock_select".
+ */
+export interface IndHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleHighlight?: T;
+  titleRest?: T;
+  subtitle?: T;
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndToolsBlock_select".
+ */
+export interface IndToolsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndProcessShowcaseBlock_select".
+ */
+export interface IndProcessShowcaseBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleBeforeHighlight?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        image?: T;
+        title?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndBenefitsBlock_select".
+ */
+export interface IndBenefitsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  mainImage?: T;
+  floatingCard?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        subtitle?: T;
+      };
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndSimpleStepsBlock_select".
+ */
+export interface IndSimpleStepsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        stepNumberImage?: T;
+        stepNumberImageClass?: T;
+        icon?: T;
+        iconWidth?: T;
+        iconHeight?: T;
+        title?: T;
+        descriptionLine1?: T;
+        descriptionLine2?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndAiSearchBlock_select".
+ */
+export interface IndAiSearchBlockSelect<T extends boolean = true> {
+  metaRatingIcon?: T;
+  metaPremiumIcon?: T;
+  metaClockIcon?: T;
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  symptomInputIcon?: T;
+  locationInputIcon?: T;
+  symptomPlaceholder?: T;
+  locationPlaceholder?: T;
+  searchButtonLabel?: T;
+  tabs?:
+    | T
+    | {
+        label?: T;
+        paneId?: T;
+        defaultActive?: T;
+        id?: T;
+      };
+  panes?:
+    | T
+    | {
+        paneId?: T;
+        columnClass?: T;
+        doctors?:
+          | T
+          | {
+              photo?: T;
+              name?: T;
+              specialty?: T;
+              ratingScore?: T;
+              ratingCount?: T;
+              experienceText?: T;
+              availabilityText?: T;
+              nextAvailableTime?: T;
+              bookHref?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndAllInOneBlock_select".
+ */
+export interface IndAllInOneBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  sideImage?: T;
+  cards?:
+    | T
+    | {
+        decorImage?: T;
+        icon?: T;
+        title?: T;
+        description?: T;
+        listItems?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        learnMoreHref?: T;
+        learnMoreArrowImage?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndVoicesBlock_select".
+ */
+export interface IndVoicesBlockSelect<T extends boolean = true> {
+  backgroundShapeImage?: T;
+  testimonialStarIcon?: T;
+  badge?: T;
+  titleBeforeHighlight?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        avatar?: T;
+        quote?: T;
+        name?: T;
+        specialty?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IndFaqBlock_select".
+ */
+export interface IndFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerSliderBlock_select".
+ */
+export interface BannerSliderBlockSelect<T extends boolean = true> {
+  slides?:
+    | T
+    | {
+        backgroundImage?: T;
+        pretitle?: T;
+        title?: T;
+        subtitle?: T;
+        primaryCta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryCta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommonHeroBlock_select".
+ */
+export interface CommonHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  sideImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SectionIntroBlock_select".
+ */
+export interface SectionIntroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeInfrastructureBlock_select".
+ */
+export interface HomeInfrastructureBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  tab1Label?: T;
+  tab2Label?: T;
+  tab1?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        bullets?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+      };
+  tab2?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        bullets?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeHighlightsBlock_select".
+ */
+export interface HomeHighlightsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        titleTop?: T;
+        titleBottom?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomePrivacyBlock_select".
+ */
+export interface HomePrivacyBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  sideImage?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeAppDownloadBlock_select".
+ */
+export interface HomeAppDownloadBlockSelect<T extends boolean = true> {
+  backgroundImage?: T;
+  badge?: T;
+  titleLine1?: T;
+  titleLine2?: T;
+  paragraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  emphasisLine?: T;
+  mockupImage?: T;
+  secondaryMockupImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HomeFaqBlock_select".
+ */
+export interface HomeFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgHeroBlock_select".
+ */
+export interface OrgHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleLine1?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  tags?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  image?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgLabSolutionsBlock_select".
+ */
+export interface OrgLabSolutionsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgPharmacySolutionsBlock_select".
+ */
+export interface OrgPharmacySolutionsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  sideImage?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        descriptionLine1?: T;
+        descriptionLine2?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgProcessStepsBlock_select".
+ */
+export interface OrgProcessStepsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgSecureReportsBlock_select".
+ */
+export interface OrgSecureReportsBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  features?:
+    | T
+    | {
+        iconLayout?: T;
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  mockupImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgFeatureGridBlock_select".
+ */
+export interface OrgFeatureGridBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titlePrefix?: T;
+  titleSpan?: T;
+  subtitle?: T;
+  cards?:
+    | T
+    | {
+        stepIcon?: T;
+        stepDecoration?: T;
+        tickImage?: T;
+        title?: T;
+        description?: T;
+        timeIcon?: T;
+        timeText?: T;
+        statusVariant?: T;
+        statusLabel?: T;
+        detailLines?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgAppCtaBlock_select".
+ */
+export interface OrgAppCtaBlockSelect<T extends boolean = true> {
+  backgroundImage?: T;
+  badge?: T;
+  title?: T;
+  bullets?:
+    | T
+    | {
+        title?: T;
+        id?: T;
+      };
+  mockupImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgEnterpriseDashboardBlock_select".
+ */
+export interface OrgEnterpriseDashboardBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  dashboardImage?: T;
+  quickInsightsBadge?: T;
+  aiInsightsBadge?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OrgFaqBlock_select".
+ */
+export interface OrgFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityHeroBlock_select".
+ */
+export interface SecurityHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  tags?:
+    | T
+    | {
+        iconClass?: T;
+        text?: T;
+        id?: T;
+      };
+  sideImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecuritySafetyBlock_select".
+ */
+export interface SecuritySafetyBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  mainImage?: T;
+  dnaOverlayImage?: T;
+  shieldBgImage?: T;
+  shieldIconImage?: T;
+  tagIconImage?: T;
+  tagHeading?: T;
+  tagSubheading?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityArchitectureBlock_select".
+ */
+export interface SecurityArchitectureBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  sideImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityThreatBlock_select".
+ */
+export interface SecurityThreatBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  backgroundImage?: T;
+  centerImage?: T;
+  alertIcon?: T;
+  alertTitle?: T;
+  alertSubtitle?: T;
+  items?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityBackupBlock_select".
+ */
+export interface SecurityBackupBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  steps?:
+    | T
+    | {
+        icon?: T;
+        stepBadge?: T;
+        title?: T;
+        description?: T;
+        layoutVariant?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityAuditBlock_select".
+ */
+export interface SecurityAuditBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  subtitle?: T;
+  image?: T;
+  loggingTitle?: T;
+  loggingItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        alignVariant?: T;
+        id?: T;
+      };
+  ctaLabel?: T;
+  ctaHref?: T;
+  ctaArrowIcon?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityAppCtaBlock_select".
+ */
+export interface SecurityAppCtaBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  bullets?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  mockupImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SecurityFaqBlock_select".
+ */
+export interface SecurityFaqBlockSelect<T extends boolean = true> {
+  heading?: T;
+  items?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogHeroBlock_select".
+ */
+export interface BlogHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  title?: T;
+  titleHighlight?: T;
+  subtitle?: T;
+  tags?:
+    | T
+    | {
+        iconClass?: T;
+        text?: T;
+        id?: T;
+      };
+  sideImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogIndexFeedBlock_select".
+ */
+export interface BlogIndexFeedBlockSelect<T extends boolean = true> {
+  featuredTag?: T;
+  featuredSubtitle?: T;
+  popularTag?: T;
+  popularSubtitle?: T;
+  recentTag?: T;
+  recentSubtitle?: T;
+  decorativeImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialHeroBlock_select".
+ */
+export interface TestimonialHeroBlockSelect<T extends boolean = true> {
+  badge?: T;
+  titleLine1?: T;
+  titleHighlight?: T;
+  titleLine2?: T;
+  subtitle?: T;
+  sideImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialCarouselBlock_select".
+ */
+export interface TestimonialCarouselBlockSelect<T extends boolean = true> {
+  variant?: T;
+  ratingStarIcon?: T;
+  badge?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        avatar?: T;
+        quote?: T;
+        name?: T;
+        specialty?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "GalleryFullPageBlock_select".
+ */
+export interface GalleryFullPageBlockSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?: T;
+        titlePrefix?: T;
+        titleHighlight?: T;
+        titleSuffix?: T;
+        subtitle?: T;
+        image?: T;
+      };
+  gallery?:
+    | T
+    | {
+        shapeImage?: T;
+        badge?: T;
+        title?: T;
+        subtitle?: T;
+        locationIcon?: T;
+        clockIcon?: T;
+        cards?:
+          | T
+          | {
+              image?: T;
+              imageAlt?: T;
+              tag?: T;
+              title?: T;
+              location?: T;
+              dateTime?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  publishedAt?: T;
+  featured?: T;
+  commentsEnabled?: T;
+  excerpt?: T;
+  featuredImage?: T;
+  author?: T;
+  categories?: T;
+  tags?: T;
+  body?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  noIndex?: T;
+  ogImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  displayName?: T;
+  photo?: T;
+  bio?: T;
+  socialLinks?:
+    | T
+    | {
+        facebook?: T;
+        twitter?: T;
+        instagram?: T;
+        linkedin?: T;
+      };
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -259,21 +3430,19 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
+ * via the `definition` "form-submissions_select".
  */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
+export interface FormSubmissionsSelect<T extends boolean = true> {
+  form?: T;
+  name?: T;
+  street?: T;
+  city?: T;
+  postCode?: T;
+  phone?: T;
+  email?: T;
+  message?: T;
   updatedAt?: T;
   createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -317,6 +3486,220 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site".
+ */
+export interface Site {
+  id: string;
+  /**
+   * Used in browser title templates and Open Graph site name.
+   */
+  siteName: string;
+  /**
+   * https://yourdomain.com (apex, no trailing slash)
+   */
+  siteUrl: string;
+  /**
+   * Fallback social share image for pages/posts without a specific OG image.
+   */
+  defaultOgImage?: (string | null) | Media;
+  /**
+   * Structured data used for SEO rich results.
+   */
+  organization?: {
+    name?: string | null;
+    logo?: (string | null) | Media;
+    sameAs?:
+      | {
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  /**
+   * Main header menu. Example: Home, About, Features.
+   */
+  navigation?:
+    | {
+        label: string;
+        href: string;
+        highlight?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  newsletterTitle?: string | null;
+  newsletterPlaceholder?: string | null;
+  newsletterButtonLabel?: string | null;
+  newsletterPoints?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  tagline?: string | null;
+  columns?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        label?: string | null;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  contactEmail?: string | null;
+  contactAddress?: string | null;
+  copyrightText?: string | null;
+  rightsText?: string | null;
+  termsLabel?: string | null;
+  termsHref?: string | null;
+  privacyLabel?: string | null;
+  privacyHref?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-settings".
+ */
+export interface BlogSetting {
+  id: string;
+  postsPerPage: number;
+  /**
+   * Shown prominently on /blog per frontend logic.
+   */
+  featuredPosts?: (string | Post)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site_select".
+ */
+export interface SiteSelect<T extends boolean = true> {
+  siteName?: T;
+  siteUrl?: T;
+  defaultOgImage?: T;
+  organization?:
+    | T
+    | {
+        name?: T;
+        logo?: T;
+        sameAs?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  navigation?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        highlight?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  newsletterTitle?: T;
+  newsletterPlaceholder?: T;
+  newsletterButtonLabel?: T;
+  newsletterPoints?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  tagline?: T;
+  columns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  contactEmail?: T;
+  contactAddress?: T;
+  copyrightText?: T;
+  rightsText?: T;
+  termsLabel?: T;
+  termsHref?: T;
+  privacyLabel?: T;
+  privacyHref?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-settings_select".
+ */
+export interface BlogSettingsSelect<T extends boolean = true> {
+  postsPerPage?: T;
+  featuredPosts?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
 export interface CollectionsWidget {
@@ -324,6 +3707,56 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EmbedYoutubeBlock".
+ */
+export interface EmbedYoutubeBlock {
+  url: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'embedYoutube';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageGalleryBlock".
+ */
+export interface ImageGalleryBlock {
+  images: (string | Media)[];
+  caption?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageGallery';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PdfDownloadBlock".
+ */
+export interface PdfDownloadBlock {
+  file: string | Media;
+  label: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pdfDownload';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DiagnosticTestTabsBlock".
+ */
+export interface DiagnosticTestTabsBlock {
+  tab1Label: string;
+  tab2Label: string;
+  tab3Label: string;
+  tab1Title: string;
+  tab1Description: string;
+  tab2Title: string;
+  tab2Description: string;
+  tab3Title: string;
+  tab3Description: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'diagnosticTestTabs';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
