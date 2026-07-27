@@ -1703,7 +1703,7 @@ export interface Post {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * CMS accounts double as blog authors — set profile photo, bio, and social links when creating users.
+ * CMS accounts double as blog writers — set display name, photo, bio, and social links when creating users.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
@@ -1711,15 +1711,15 @@ export interface Post {
 export interface User {
   id: string;
   /**
-   * Public author name on the blog. Auto-filled from email if left empty.
+   * Public name on the blog. Auto-filled from email if left empty.
    */
   displayName: string;
   /**
-   * Circular avatar on blog author sections (recommended: square image).
+   * Circular avatar on blog writer sections (recommended: square image).
    */
   photo?: (string | null) | Media;
   /**
-   * Brief description shown in blog author sections.
+   * Brief description shown in blog writer sections.
    */
   bio?: string | null;
   socialLinks?: {
