@@ -1,4 +1,5 @@
 import { IndividualsPage } from '@/components/pages/IndividualsPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,5 +10,5 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <IndividualsPage />
+  return <CmsFixedPage slug="individuals" fallback={<IndividualsPage />} />
 }

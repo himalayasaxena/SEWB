@@ -1,13 +1,14 @@
 import { ContactPage } from '@/components/pages/ContactPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
   return buildPageMetadata('contact', {
-    title: 'Contact SEWB',
-    description: 'Office location, phone, email, and message form — SEWB support and partnerships.',
+    title: 'Contact',
+    description: 'Get in touch with the SEWB team.',
   })
 }
 
 export default function Page() {
-  return <ContactPage />
+  return <CmsFixedPage slug="contact" fallback={<ContactPage />} />
 }

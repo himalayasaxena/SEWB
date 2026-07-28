@@ -30,6 +30,9 @@ export async function getPublishedPageBySlug(slug: string): Promise<Page | null>
       },
       limit: 1,
       depth: 2,
+      // Public marketing routes must read published pages even when the browser
+      // session is a non-admin CMS user (Pages.read denies non-admins).
+      overrideAccess: true,
     })
     return (res.docs[0] as Page | undefined) ?? null
   } catch {

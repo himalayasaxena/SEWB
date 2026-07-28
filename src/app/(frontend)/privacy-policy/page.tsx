@@ -1,4 +1,5 @@
 import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,5 +10,5 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <PrivacyPolicyPage />
+  return <CmsFixedPage slug="privacy-policy" fallback={<PrivacyPolicyPage />} />
 }

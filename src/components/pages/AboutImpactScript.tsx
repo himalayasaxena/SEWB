@@ -3,17 +3,23 @@
 import { useEffect } from 'react'
 
 /** Mirrors inline script from UI/about.php for impact tabs. */
-export function AboutImpactScript() {
+export function AboutImpactScript({ instanceKey }: { instanceKey?: string } = {}) {
   useEffect(() => {
-    const impactTabs = document.querySelectorAll('.about-impact-tab')
-    const impactTitle = document.getElementById('aboutImpactTitle')
-    const impactCopy = document.getElementById('aboutImpactCopy')
-    const impactName = document.getElementById('aboutImpactName')
-    const impactRole = document.getElementById('aboutImpactRole')
-    const impactStatLabel = document.getElementById('aboutImpactStatLabel')
-    const impactStatValue = document.getElementById('aboutImpactStatValue')
-    const impactBottom = document.getElementById('aboutImpactBottom')
-    const impactLink = document.getElementById('aboutImpactLink') as HTMLAnchorElement | null
+    const id = (base: string) => (instanceKey ? `${base}-${instanceKey}` : base)
+    const root = instanceKey
+      ? document.getElementById(id('aboutImpactSection'))
+      : document.querySelector('.about-impact-section')
+    const scope: ParentNode = root ?? document
+
+    const impactTabs = scope.querySelectorAll('.about-impact-tab')
+    const impactTitle = document.getElementById(id('aboutImpactTitle'))
+    const impactCopy = document.getElementById(id('aboutImpactCopy'))
+    const impactName = document.getElementById(id('aboutImpactName'))
+    const impactRole = document.getElementById(id('aboutImpactRole'))
+    const impactStatLabel = document.getElementById(id('aboutImpactStatLabel'))
+    const impactStatValue = document.getElementById(id('aboutImpactStatValue'))
+    const impactBottom = document.getElementById(id('aboutImpactBottom'))
+    const impactLink = document.getElementById(id('aboutImpactLink')) as HTMLAnchorElement | null
     if (!impactTabs.length || !impactTitle || !impactCopy) {
       return
     }
@@ -35,7 +41,7 @@ export function AboutImpactScript() {
         if (impactLink) impactLink.href = this.dataset.impactLink || 'javascript:;'
       })
     })
-  }, [])
+  }, [instanceKey])
 
   return null
 }

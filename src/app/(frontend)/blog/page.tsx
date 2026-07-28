@@ -1,4 +1,5 @@
 import BlogIndexPage from '@/components/blog/BlogIndexPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -8,6 +9,6 @@ export async function generateMetadata() {
   })
 }
 
-export default async function Page() {
-  return <BlogIndexPage />
+export default function Page() {
+  return <CmsFixedPage slug="blog" fallback={<BlogIndexPage />} />
 }

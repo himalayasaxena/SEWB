@@ -7,18 +7,7 @@ import type { Page } from '@/payload-types'
 import { PageBlocks } from '@/components/PageBlocks'
 import { HomePageBanner } from '@/components/pages/HomePageBanner'
 import { HomePageMain } from '@/components/pages/HomePageMain'
-
-function layoutIsFullCmsHome(layout: Page['layout']) {
-  if (!layout?.length) return false
-  return layout.some(
-    (b) =>
-      b.blockType === 'homeInfrastructure' ||
-      b.blockType === 'homeFaq' ||
-      b.blockType === 'homeHighlights' ||
-      b.blockType === 'homePrivacy' ||
-      b.blockType === 'homeAppDownload',
-  )
-}
+import { isFullCmsHomeLayout } from '@/lib/cms/isFullCmsHomeLayout'
 
 /**
  * Entire homepage from CMS `layout` (banner + all home blocks) with live postMessage updates.
@@ -33,7 +22,7 @@ export function HomePageLivePreview({ initialPage }: { initialPage: Page }) {
   })
 
   const layout = page.layout ?? []
-  const useCms = layoutIsFullCmsHome(layout)
+  const useCms = isFullCmsHomeLayout(layout)
 
   return (
     <>

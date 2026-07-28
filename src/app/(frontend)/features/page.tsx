@@ -1,13 +1,14 @@
 import { FeaturesPage } from '@/components/pages/FeaturesPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
   return buildPageMetadata('features', {
-    title: 'Platform Features',
-    description: 'Capabilities that power SEWB — AI intelligence, security, devices, and care workflows.',
+    title: 'Features',
+    description: 'Explore SEWB platform features for individuals, professionals, and organisations.',
   })
 }
 
 export default function Page() {
-  return <FeaturesPage />
+  return <CmsFixedPage slug="features" fallback={<FeaturesPage />} />
 }

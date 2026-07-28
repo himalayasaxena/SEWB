@@ -1,4 +1,5 @@
 import { TermsConditionsPage } from '@/components/pages/TermsConditionsPage'
+import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,5 +10,5 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  return <TermsConditionsPage />
+  return <CmsFixedPage slug="terms-conditions" fallback={<TermsConditionsPage />} />
 }
