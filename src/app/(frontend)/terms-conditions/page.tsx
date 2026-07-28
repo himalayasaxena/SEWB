@@ -1,5 +1,4 @@
 import { TermsConditionsPage } from '@/components/pages/TermsConditionsPage'
-import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,6 +8,10 @@ export async function generateMetadata() {
   })
 }
 
+/**
+ * Full legal copy lives in TermsConditionsPage. CMS only has hero + sectionIntro stubs —
+ * do not use CmsFixedPage until a real terms layout block exists.
+ */
 export default function Page() {
-  return <CmsFixedPage slug="terms-conditions" fallback={<TermsConditionsPage />} />
+  return <TermsConditionsPage />
 }

@@ -18,6 +18,7 @@ export function HomeHighlightsSection({ block }: { block: HomeHighlightsBlock })
         </div>
         <div className="highlights-grid ">
           {items.map((item, idx) => {
+            if (!item) return null
             const iconSrc = item.icon ? mediaUrl(item.icon) : ''
             return (
               <div key={item.id ?? idx} className="highlight-item">

@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 
+import { logCmsError } from '@/lib/cms/logCmsError'
 import type { Page } from '@/payload-types'
 import config from '@/payload.config'
 
@@ -35,7 +36,8 @@ export async function getPublishedPageBySlug(slug: string): Promise<Page | null>
       overrideAccess: true,
     })
     return (res.docs[0] as Page | undefined) ?? null
-  } catch {
+  } catch (error) {
+    logCmsError('getPublishedPageBySlug failed — route may use static fallback', error, { slug })
     return null
   }
 }
@@ -55,7 +57,8 @@ export async function getPageDocumentByIdForPreviewRoute(id: string): Promise<Pa
       overrideAccess: true,
     })
     return doc as Page
-  } catch {
+  } catch (error) {
+    logCmsError('getPageDocumentByIdForPreviewRoute failed', error, { id })
     return null
   }
 }

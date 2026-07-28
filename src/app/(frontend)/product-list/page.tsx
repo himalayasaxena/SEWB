@@ -1,5 +1,4 @@
 import { ProductListPage } from '@/components/pages/ProductListPage'
-import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,6 +8,11 @@ export async function generateMetadata() {
   })
 }
 
+/**
+ * Full product grid UI matches production (sewb.ai/product-list / ProductListPage).
+ * CMS currently only seeds hero + section intros for this slug — do not use CmsFixedPage
+ * until a real product-list layout block exists.
+ */
 export default function Page() {
-  return <CmsFixedPage slug="product-list" fallback={<ProductListPage />} />
+  return <ProductListPage />
 }

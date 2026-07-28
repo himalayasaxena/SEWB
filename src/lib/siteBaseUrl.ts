@@ -1,7 +1,6 @@
-import { getPayload } from 'payload'
-
+import { getSiteGlobal } from '@/lib/cms/getSiteGlobals'
+import { logCmsError } from '@/lib/cms/logCmsError'
 import type { Media } from '@/payload-types'
-import config from '@/payload.config'
 
 export function envFallbackBase(): string {
   return (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000').replace(/\/$/, '')
@@ -44,16 +43,14 @@ export function canonicalBaseFromSiteUrl(siteUrl: string | undefined | null): st
 export async function getSiteBaseUrl(): Promise<string> {
   const fallback = envFallbackBase()
   try {
-    const payloadConfig = await config
-    const payload = await getPayload({ config: payloadConfig })
-    const site = await payload.findGlobal({ slug: 'site' })
-    const raw = typeof site.siteUrl === 'string' ? site.siteUrl : ''
+    const site = await getSiteGlobal()
+    const raw = typeof site?.siteUrl === 'string' ? site.siteUrl : ''
     if (!isUntrustedCanonicalUrl(raw)) {
       const normalized = normalizeBaseUrl(raw)
       if (normalized) return normalized
     }
-  } catch {
-    // DB unavailable (e.g. static export probe) — use env
+  } catch (error) {
+    logCmsError('getSiteBaseUrl failed — using NEXT_PUBLIC_SERVER_URL / localhost', error)
   }
   return fallback
 }

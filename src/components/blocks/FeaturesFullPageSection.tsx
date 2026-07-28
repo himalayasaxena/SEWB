@@ -16,48 +16,61 @@ export function FeaturesFullPageSection({
   block: FeaturesFullPageBlock
   instanceKey: string
 }) {
-  const {
-    hero,
-    smartHealth,
-    powerfulFeatures,
-    realWorld,
-    secureData,
-    healthTracking,
-    appSection,
-    faq,
-  } = block
+  // Groups may be missing on incomplete drafts — never assume they exist.
+  const hero = block.hero
+  const smartHealth = block.smartHealth
+  const powerfulFeatures = block.powerfulFeatures
+  const realWorld = block.realWorld
+  const secureData = block.secureData
+  const healthTracking = block.healthTracking
+  const appSection = block.appSection
+  const faq = block.faq
 
   const uid = (block.id ?? instanceKey).toString().replace(/[^a-zA-Z0-9]/g, '')
   const accordionId = `faqAccordion-features-${uid}`
 
-  const heroImage = hero.image ? mediaUrl(hero.image) : ''
-  const smartSide = smartHealth.sideImage ? mediaUrl(smartHealth.sideImage) : ''
-  const ctaArrow = smartHealth.ctaArrowImage ? mediaUrl(smartHealth.ctaArrowImage) : ''
-  const realWorldImg = realWorld.sideImage ? mediaUrl(realWorld.sideImage) : ''
-  const secureImg = secureData.image ? mediaUrl(secureData.image) : ''
-  const productBg = healthTracking.productBackground
+  const heroImage = hero?.image ? mediaUrl(hero.image) : ''
+  const smartSide = smartHealth?.sideImage ? mediaUrl(smartHealth.sideImage) : ''
+  const ctaArrow = smartHealth?.ctaArrowImage ? mediaUrl(smartHealth.ctaArrowImage) : ''
+  const realWorldImg = realWorld?.sideImage ? mediaUrl(realWorld.sideImage) : ''
+  const secureImg = secureData?.image ? mediaUrl(secureData.image) : ''
+  const productBg = healthTracking?.productBackground
     ? mediaUrl(healthTracking.productBackground)
     : ''
-  const trackImg = healthTracking.trackImage ? mediaUrl(healthTracking.trackImage) : ''
-  const overlayAi = healthTracking.overlayBadgeAi
+  const trackImg = healthTracking?.trackImage ? mediaUrl(healthTracking.trackImage) : ''
+  const overlayAi = healthTracking?.overlayBadgeAi
     ? mediaUrl(healthTracking.overlayBadgeAi)
     : ''
-  const overlayAlert = healthTracking.overlayBadgeAlert
+  const overlayAlert = healthTracking?.overlayBadgeAlert
     ? mediaUrl(healthTracking.overlayBadgeAlert)
     : ''
-  const appBg = appSection.backgroundImage ? mediaUrl(appSection.backgroundImage) : ''
-  const appMockup = appSection.mockupImage ? mediaUrl(appSection.mockupImage) : ''
+  const appBg = appSection?.backgroundImage ? mediaUrl(appSection.backgroundImage) : ''
+  const appMockup = appSection?.mockupImage ? mediaUrl(appSection.mockupImage) : ''
 
-  const heroTags = hero.tags ?? []
-  const featureCards = powerfulFeatures.cards ?? []
-  const steps = realWorld.steps ?? []
-  const secureItems = secureData.items ?? []
-  const trackingItems = healthTracking.items ?? []
-  const appBullets = appSection.bullets ?? []
-  const faqItems = faq.items ?? []
+  const heroTags = hero?.tags ?? []
+  const featureCards = powerfulFeatures?.cards ?? []
+  const steps = realWorld?.steps ?? []
+  const secureItems = secureData?.items ?? []
+  const trackingItems = healthTracking?.items ?? []
+  const appBullets = appSection?.bullets ?? []
+  const faqItems = faq?.items ?? []
+
+  if (
+    !hero &&
+    !smartHealth &&
+    !powerfulFeatures &&
+    !realWorld &&
+    !secureData &&
+    !healthTracking &&
+    !appSection &&
+    !faq
+  ) {
+    return null
+  }
 
   return (
     <>
+      {hero ? (
       <section className="common-hero-section" style={{ paddingBottom: 0 }}>
         <div className="custom-container container-fluid">
           <div className="row align-items-center justify-content-between g-4">
@@ -112,7 +125,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {smartHealth ? (
       <section className="smart-health-section section features-health">
         <div className="custom-container container-fluid">
           <div className="row justify-content-center text-center">
@@ -158,7 +173,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {powerfulFeatures ? (
       <section className="security-section two section features">
         <div className="custom-container container-fluid">
           <div className="row justify-content-center text-center mb-4 mb-lg-0">
@@ -174,9 +191,10 @@ export function FeaturesFullPageSection({
           </div>
           <div className="row g-4 justify-content-center">
             {featureCards.map((card, i) => {
-              const icon = card?.icon ? mediaUrl(card.icon) : ''
+              if (!card) return null
+              const icon = card.icon ? mediaUrl(card.icon) : ''
               return (
-                <div key={card?.id ?? i} className="col-xl-3 col-lg-4 col-sm-6">
+                <div key={card.id ?? i} className="col-xl-3 col-lg-4 col-sm-6">
                   <div className="security-card">
                     {icon ? (
                       <div className="benefit-icon-box">
@@ -189,8 +207,8 @@ export function FeaturesFullPageSection({
                         />
                       </div>
                     ) : null}
-                    <h3 className="card-title">{card?.title}</h3>
-                    <p className="card-desc">{card?.description}</p>
+                    <h3 className="card-title">{card.title}</h3>
+                    <p className="card-desc">{card.description}</p>
                   </div>
                 </div>
               )
@@ -198,7 +216,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {realWorld ? (
       <section
         className="real-world-section section position-relative overflow-hidden py-5"
         style={{ background: 'linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)' }}
@@ -343,7 +363,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {secureData ? (
       <section className="protected-section section bg-white">
         <div className="custom-container container-fluid">
           <div className="row justify-content-center text-center mb-5">
@@ -376,9 +398,10 @@ export function FeaturesFullPageSection({
                 <p className="mb-md-5 mb-2 card-desc">{secureData.paragraph2}</p>
                 <div className="row g-4 w-100 mx-auto ps-0 ms-0">
                   {secureItems.map((item, i) => {
-                    const icon = item?.icon ? mediaUrl(item.icon) : ''
+                    if (!item) return null
+                    const icon = item.icon ? mediaUrl(item.icon) : ''
                     return (
-                      <div key={item?.id ?? i} className="col-sm-6">
+                      <div key={item.id ?? i} className="col-sm-6">
                         <div className="protected-card">
                           {icon ? (
                             <div className="benefit-icon-box">
@@ -391,7 +414,7 @@ export function FeaturesFullPageSection({
                               />
                             </div>
                           ) : null}
-                          <h3 className="card-title">{item?.title}</h3>
+                          <h3 className="card-title">{item.title}</h3>
                         </div>
                       </div>
                     )
@@ -402,7 +425,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {healthTracking ? (
       <section className="tracking-section section">
         <div className="custom-container container-fluid">
           <div className="product-card-wrapper right tracking-wrapper mt-0">
@@ -507,7 +532,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {appSection ? (
       <section className="app-download-section two feature" id="app">
         {appBg ? (
           <img
@@ -558,7 +585,9 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {faq ? (
       <section className="faq-section" id="faq">
         <div className="container-fluid custom-container">
           <div className="row justify-content-center">
@@ -566,10 +595,11 @@ export function FeaturesFullPageSection({
               <h2 className="faq-title">{faq.heading ?? 'FAQs'}</h2>
               <div className="accordion faq-accordion" id={accordionId}>
                 {faqItems.map((item, i) => {
+                  if (!item) return null
                   const collapseId = `faq-features-${uid}-${i}`
                   const isFirst = i === 0
                   return (
-                    <div key={item?.id ?? i} className="accordion-item">
+                    <div key={item.id ?? i} className="accordion-item">
                       <h3 className="accordion-header">
                         <button
                           className={
@@ -581,7 +611,7 @@ export function FeaturesFullPageSection({
                           aria-expanded={isFirst ? 'true' : 'false'}
                           aria-controls={collapseId}
                         >
-                          {item?.question}
+                          {item.question}
                         </button>
                       </h3>
                       <div
@@ -589,7 +619,7 @@ export function FeaturesFullPageSection({
                         className={`accordion-collapse collapse${isFirst ? ' show' : ''}`}
                         data-bs-parent={`#${accordionId}`}
                       >
-                        <div className="accordion-body">{item?.answer}</div>
+                        <div className="accordion-body">{item.answer}</div>
                       </div>
                     </div>
                   )
@@ -599,6 +629,7 @@ export function FeaturesFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
       <FeaturesAosInit />
     </>

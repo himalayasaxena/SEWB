@@ -15,39 +15,48 @@ export function AboutFullPageSection({
   instanceKey: string
 }) {
   const uid = (block.id ?? instanceKey).toString().replace(/[^a-zA-Z0-9]/g, '')
-  const { hero, journey, why, impact, founders, faq } = block
+  // Groups may be missing on incomplete drafts — never assume they exist.
+  const hero = block.hero
+  const journey = block.journey
+  const why = block.why
+  const impact = block.impact
+  const founders = block.founders
+  const faq = block.faq
 
-  const heroImg = hero.image ? mediaUrl(hero.image) : ''
-  const journeyLeft = journey.leftImage ? mediaUrl(journey.leftImage) : ''
-  const journeyCenter = journey.centerImage ? mediaUrl(journey.centerImage) : ''
-  const journeyRight = journey.rightImage ? mediaUrl(journey.rightImage) : ''
-  const whyImg = why.image ? mediaUrl(why.image) : ''
+  const heroImg = hero?.image ? mediaUrl(hero.image) : ''
+  const journeyLeft = journey?.leftImage ? mediaUrl(journey.leftImage) : ''
+  const journeyCenter = journey?.centerImage ? mediaUrl(journey.centerImage) : ''
+  const journeyRight = journey?.rightImage ? mediaUrl(journey.rightImage) : ''
+  const whyImg = why?.image ? mediaUrl(why.image) : ''
 
-  const networkImg = impact.networkImage ? mediaUrl(impact.networkImage) : ''
-  const baseImg = impact.baseImage ? mediaUrl(impact.baseImage) : ''
-  const doctorImg = impact.doctorImage ? mediaUrl(impact.doctorImage) : ''
-  const avatarImg = impact.avatarImage ? mediaUrl(impact.avatarImage) : ''
-  const chatImg = impact.chatImage ? mediaUrl(impact.chatImage) : ''
-  const barChartImg = impact.barChartImage ? mediaUrl(impact.barChartImage) : ''
-  const circleImg = impact.circleImage ? mediaUrl(impact.circleImage) : ''
+  const networkImg = impact?.networkImage ? mediaUrl(impact.networkImage) : ''
+  const baseImg = impact?.baseImage ? mediaUrl(impact.baseImage) : ''
+  const doctorImg = impact?.doctorImage ? mediaUrl(impact.doctorImage) : ''
+  const avatarImg = impact?.avatarImage ? mediaUrl(impact.avatarImage) : ''
+  const chatImg = impact?.chatImage ? mediaUrl(impact.chatImage) : ''
+  const barChartImg = impact?.barChartImage ? mediaUrl(impact.barChartImage) : ''
+  const circleImg = impact?.circleImage ? mediaUrl(impact.circleImage) : ''
 
-  const tabs = impact.tabs ?? []
+  const tabs = impact?.tabs ?? []
   const activeTabIndex = Math.max(
     0,
     tabs.findIndex((t) => t?.defaultActive),
   )
   const activeTab = tabs[activeTabIndex] ?? tabs[0]
-  const linkHref = impact.linkHref || '#'
-  const linkLabel = impact.linkLabel || 'Learn More'
+  const linkHref = impact?.linkHref || '#'
+  const linkLabel = impact?.linkLabel || 'Learn More'
 
-  const members = founders.members ?? []
-  const faqItems = faq.items ?? []
+  const members = founders?.members ?? []
+  const faqItems = faq?.items ?? []
   const accordionId = `faqAccordion-about-${uid}`
 
   const impactId = (base: string) => `${base}-${uid}`
 
+  if (!hero && !journey && !why && !impact && !founders && !faq) return null
+
   return (
     <>
+      {hero ? (
       <section className="common-hero-section">
         <div className="custom-container container-fluid">
           <div className="row align-items-center about-main-row">
@@ -68,11 +77,13 @@ export function AboutFullPageSection({
                 {hero.subtitle ? <p className="hero-subtitle">{hero.subtitle}</p> : null}
                 {hero.tags && hero.tags.length > 0 ? (
                   <div className="hero-features-tags">
-                    {hero.tags.map((tag, i) => (
-                      <span key={tag?.id ?? i} className="feature-tag">
-                        <i className="fas fa-check-circle"></i> {tag?.text}
-                      </span>
-                    ))}
+                    {hero.tags.map((tag, i) =>
+                      tag?.text ? (
+                        <span key={tag.id ?? i} className="feature-tag">
+                          <i className="fas fa-check-circle"></i> {tag.text}
+                        </span>
+                      ) : null,
+                    )}
                   </div>
                 ) : null}
               </div>
@@ -95,7 +106,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {journey ? (
       <section>
         <div className="about-journey-section">
           <div className="custom-container container-fluid">
@@ -180,7 +193,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {why ? (
       <section className="why-new-section section">
         <div className="container-fluid custom-container">
           <div className="row align-items-center justify-content-lg-between justify-content-center g-4">
@@ -209,7 +224,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {impact ? (
       <section className="about-impact-section" id={impactId('aboutImpactSection')}>
         {networkImg ? (
           <div className="about-impact-network">
@@ -354,7 +371,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {founders ? (
       <section className="about-founders-section">
         <div className="custom-container container-fluid">
           <div className=" row justify-content-center">
@@ -369,9 +388,10 @@ export function AboutFullPageSection({
           </div>
           <div className="row g-3 g-lg-4 about-founders-grid justify-content-center">
             {members.map((member, i) => {
-              const img = member?.image ? mediaUrl(member.image) : ''
+              if (!member) return null
+              const img = member.image ? mediaUrl(member.image) : ''
               return (
-                <div key={member?.id ?? i} className="col-sm-6 col-lg-4">
+                <div key={member.id ?? i} className="col-sm-6 col-lg-4">
                   <div className="team-member-card">
                     {img ? (
                       <div className="team-image-container">
@@ -380,15 +400,15 @@ export function AboutFullPageSection({
                           width={530}
                           height={530}
                           loading="lazy"
-                          alt={mediaAlt(member?.image, member?.name ?? 'Founder')}
+                          alt={mediaAlt(member.image, member.name ?? 'Founder')}
                           className="img-fluid team-member-photo"
                         />
                       </div>
                     ) : null}
                     <div className="team-member-info">
-                      <h3 className="team-member-name">{member?.name}</h3>
-                      {member?.role ? <p className="team-member-role">{member.role}</p> : null}
-                      {(member?.linkedin || member?.twitter || member?.emailHref) && (
+                      <h3 className="team-member-name">{member.name}</h3>
+                      {member.role ? <p className="team-member-role">{member.role}</p> : null}
+                      {(member.linkedin || member.twitter || member.emailHref) && (
                         <div className="team-member-social">
                           {member.linkedin ? (
                             <a href={member.linkedin} className="social-link">
@@ -415,7 +435,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
+      {faq ? (
       <section className="faq-section" id="faq">
         <div className="container-fluid custom-container">
           <div className="row justify-content-center">
@@ -423,10 +445,11 @@ export function AboutFullPageSection({
               <h2 className="faq-title">{faq.heading || 'FAQs'}</h2>
               <div className="accordion faq-accordion" id={accordionId}>
                 {faqItems.map((item, i) => {
+                  if (!item) return null
                   const collapseId = `faq-about-${uid}-${i}`
                   const isFirst = i === 0
                   return (
-                    <div key={item?.id ?? i} className="accordion-item">
+                    <div key={item.id ?? i} className="accordion-item">
                       <h3 className="accordion-header">
                         <button
                           className={isFirst ? 'accordion-button' : 'accordion-button collapsed'}
@@ -436,7 +459,7 @@ export function AboutFullPageSection({
                           aria-expanded={isFirst ? 'true' : 'false'}
                           aria-controls={collapseId}
                         >
-                          {item?.question}
+                          {item.question}
                         </button>
                       </h3>
                       <div
@@ -444,7 +467,7 @@ export function AboutFullPageSection({
                         className={`accordion-collapse collapse${isFirst ? ' show' : ''}`}
                         data-bs-parent={`#${accordionId}`}
                       >
-                        <div className="accordion-body">{item?.answer}</div>
+                        <div className="accordion-body">{item.answer}</div>
                       </div>
                     </div>
                   )
@@ -454,8 +477,9 @@ export function AboutFullPageSection({
           </div>
         </div>
       </section>
+      ) : null}
 
-      <AboutImpactScript instanceKey={uid} />
+      {impact ? <AboutImpactScript instanceKey={uid} /> : null}
     </>
   )
 }

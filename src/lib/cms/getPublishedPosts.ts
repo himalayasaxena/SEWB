@@ -1,6 +1,7 @@
 import { draftMode } from 'next/headers'
 import { getPayload } from 'payload'
 
+import { logCmsError } from '@/lib/cms/logCmsError'
 import type { Post } from '@/payload-types'
 import config from '@/payload.config'
 
@@ -61,7 +62,8 @@ export async function getPostDocumentByIdForPreviewRoute(id: string): Promise<Po
       overrideAccess: true,
     })
     return doc as Post
-  } catch {
+  } catch (error) {
+    logCmsError('getPostDocumentByIdForPreviewRoute failed', error, { id })
     return null
   }
 }

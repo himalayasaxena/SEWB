@@ -1,27 +1,28 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { getPayload } from 'payload'
 import React from 'react'
 
 import { DraftPreviewBar } from '@/components/DraftPreviewBar'
 import { SiteFooter } from '@/components/SiteFooter'
 import { SiteHeader } from '@/components/SiteHeader'
+import { getFooterGlobal, getHeaderGlobal, getSiteGlobal } from '@/lib/cms/getSiteGlobals'
+import { logCmsError } from '@/lib/cms/logCmsError'
+import { defaultNavigation, resolveNavigation, type NavLink } from '@/lib/defaultNavigation'
 import { isNoIndexEnabled, siteNoIndexRobots } from '@/lib/noIndexSite'
 import { canonicalBaseFromSiteUrl, getSiteBaseUrl, mediaAbsoluteUrl } from '@/lib/siteBaseUrl'
-import config from '@/payload.config'
-import { defaultNavigation, resolveNavigation, type NavLink } from '@/lib/defaultNavigation'
 import type { Footer as FooterGlobal } from '@/payload-types'
 
 /** Site-wide defaults; each route adds its own title/description via `buildPageMetadata` + CMS Page. */
 export async function generateMetadata(): Promise<Metadata> {
   const fallbackTitle = 'SEWB - Global Care'
   try {
-    const payloadConfig = await config
-    const payload = await getPayload({ config: payloadConfig })
-    const site = await payload.findGlobal({ slug: 'site', depth: 2 })
-    const title = typeof site.siteName === 'string' && site.siteName.trim() ? site.siteName : fallbackTitle
-    const base = canonicalBaseFromSiteUrl(site.siteUrl)
-    const ogImage = mediaAbsoluteUrl(base, site.defaultOgImage)
+    const site = await getSiteGlobal(2)
+    const title =
+      site && typeof site.siteName === 'string' && site.siteName.trim()
+        ? site.siteName
+        : fallbackTitle
+    const base = canonicalBaseFromSiteUrl(site?.siteUrl)
+    const ogImage = mediaAbsoluteUrl(base, site?.defaultOgImage)
 
     return {
       metadataBase: new URL(base),
@@ -36,7 +37,8 @@ export async function generateMetadata(): Promise<Metadata> {
         ...(ogImage ? { images: [{ url: ogImage }] } : {}),
       },
     }
-  } catch {
+  } catch (error) {
+    logCmsError('generateMetadata failed — using fallback title/base', error)
     const base = await getSiteBaseUrl()
     return {
       metadataBase: new URL(base),
@@ -52,13 +54,11 @@ export default async function FrontendLayout(props: { children: React.ReactNode 
   let navigation: NavLink[] = defaultNavigation
   let footerGlobal: FooterGlobal | null = null
   try {
-    const payloadConfig = await config
-    const payload = await getPayload({ config: payloadConfig })
-    const header = await payload.findGlobal({ slug: 'header' })
-    navigation = resolveNavigation(header.navigation)
-
-    footerGlobal = (await payload.findGlobal({ slug: 'footer' })) as FooterGlobal
-  } catch {
+    const [header, footer] = await Promise.all([getHeaderGlobal(), getFooterGlobal()])
+    if (header) navigation = resolveNavigation(header.navigation)
+    footerGlobal = footer
+  } catch (error) {
+    logCmsError('FrontendLayout chrome failed — using default header/footer', error)
     navigation = defaultNavigation
     footerGlobal = null
   }

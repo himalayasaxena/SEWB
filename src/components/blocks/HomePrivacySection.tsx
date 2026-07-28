@@ -37,6 +37,7 @@ export function HomePrivacySection({ block }: { block: HomePrivacyBlock }) {
             <div className="col-lg-6 col-md-10">
               <div className="privacy-features">
                 {features.map((f, i) => {
+                  if (!f) return null
                   const ic = f.icon ? mediaUrl(f.icon) : ''
                   return (
                     <div key={f.id ?? i} className="privacy-feature-item">

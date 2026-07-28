@@ -1,5 +1,4 @@
 import { PrivacyPolicyPage } from '@/components/pages/PrivacyPolicyPage'
-import { CmsFixedPage } from '@/components/cms/CmsFixedPage'
 import { buildPageMetadata } from '@/lib/cms/buildPageMetadata'
 
 export async function generateMetadata() {
@@ -9,6 +8,10 @@ export async function generateMetadata() {
   })
 }
 
+/**
+ * Full legal copy lives in PrivacyPolicyPage. CMS only has hero + sectionIntro stubs —
+ * do not use CmsFixedPage until a real privacy layout block exists.
+ */
 export default function Page() {
-  return <CmsFixedPage slug="privacy-policy" fallback={<PrivacyPolicyPage />} />
+  return <PrivacyPolicyPage />
 }
