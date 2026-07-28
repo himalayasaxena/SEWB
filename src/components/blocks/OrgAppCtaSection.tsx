@@ -48,11 +48,6 @@ export function OrgAppCtaSection({ block }: { block: OrgAppCtaBlock }) {
           </div>
         </div>
       </div>
-      <div className="app-mockup two">
-        {mockup ? (
-          <img src={mockup} width={850} height={550} loading="lazy" alt="" className="img-fluid" />
-        ) : null}
-      </div>
     </section>
   )
 }

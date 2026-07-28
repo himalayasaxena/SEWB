@@ -9,7 +9,7 @@ export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock 
       mediaUrl(block.backgroundImage)
     : phpAsset('assets/img/features/product-bg.webp')
   const mockup = block.mockupImage ? mediaUrl(block.mockupImage) : ''
-  const mockup2 = block.secondaryMockupImage ? mediaUrl(block.secondaryMockupImage) : mockup
+  const mockup2 = block.secondaryMockupImage ? mediaUrl(block.secondaryMockupImage) : ''
   const paragraphs = block.paragraphs ?? []
 
   return (
@@ -59,11 +59,11 @@ export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock 
           </div>
         </div>
       </div>
-      <div className="app-mockup two">
-        {mockup2 ? (
+      {mockup2 ? (
+        <div className="app-mockup two">
           <img src={mockup2} width={850} height={550} loading="lazy" alt="" className="img-fluid" />
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </section>
   )
 }

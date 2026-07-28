@@ -557,18 +557,6 @@ export function FeaturesFullPageSection({
             </div>
           </div>
         </div>
-        <div className="app-mockup two">
-          {appMockup ? (
-            <img
-              src={appMockup}
-              width={850}
-              height={550}
-              loading="lazy"
-              alt=""
-              className="img-fluid"
-            />
-          ) : null}
-        </div>
       </section>
 
       <section className="faq-section" id="faq">
