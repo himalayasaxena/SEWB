@@ -16,14 +16,14 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 
 /** @type {{ name: string, min: string, advisories: string }[]} */
 const REQUIREMENTS = [
-  { name: 'fast-uri', min: '3.1.4', advisories: 'CVE-2026-13676, CVE-2026-16221' },
+  { name: 'fast-uri', min: '3.1.5', advisories: 'CVE-2026-18446, CVE-2026-13676, CVE-2026-16221' },
   { name: 'immutable', min: '4.3.9', advisories: 'CVE-2026-59879, CVE-2026-59880' },
-  { name: 'js-yaml', min: '4.3.0', advisories: 'CVE-2026-59869, CVE-2026-53550' },
+  { name: 'js-yaml', min: '4.3.1', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550' },
   { name: 'mongoose', min: '8.24.1', advisories: 'CVE-2026-42334, GHSA-664h-wqgq-64gw' },
   { name: 'next', min: '16.2.11', advisories: 'CVE-2026-64641..64649' },
   { name: 'postcss', min: '8.5.18', advisories: 'CVE-2026-45623, GHSA-r28c-9q8g-f849, CVE-2026-41305' },
   { name: 'sharp', min: '0.35.0', advisories: 'GHSA-f88m-g3jw-g9cj' },
-  { name: 'undici', min: '7.28.0', advisories: 'CVE-2026-12151, CVE-2026-6734, CVE-2026-9697' },
+  { name: 'undici', min: '7.29.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729' },
   { name: 'uuid', min: '11.1.1', advisories: 'CVE-2026-41907' },
   { name: 'ws', min: '8.21.0', advisories: 'CVE-2026-48779, CVE-2026-45736' },
   { name: 'esbuild', min: '0.28.1', advisories: 'GHSA-g7r4-m6w7-qqqr' },

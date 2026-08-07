@@ -60,7 +60,10 @@
     "postcss": "^8.5.25",
     "sharp": "$sharp",
     "mongoose": "^8.24.2",
-    "brace-expansion": "file:vendor/brace-expansion"
+    "brace-expansion": "file:vendor/brace-expansion",
+    "fast-uri": "3.1.5",
+    "undici": "7.29.0",
+    "js-yaml": "4.3.1"
   },
   "engines": {
     "node": ">=20.9.0",
@@ -71,7 +74,10 @@
       "postcss": "^8.5.25",
       "sharp": "0.35.3",
       "mongoose": "^8.24.2",
-      "brace-expansion": "file:vendor/brace-expansion"
+      "brace-expansion": "file:vendor/brace-expansion",
+      "fast-uri": "3.1.5",
+      "undici": "7.29.0",
+      "js-yaml": "4.3.1"
     },
     "onlyBuiltDependencies": [
       "sharp",
