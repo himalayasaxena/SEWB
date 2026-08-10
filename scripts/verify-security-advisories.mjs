@@ -20,7 +20,9 @@ const REQUIREMENTS = [
   { name: 'immutable', min: '4.3.9', advisories: 'CVE-2026-59879, CVE-2026-59880' },
   { name: 'js-yaml', min: '4.3.1', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550' },
   { name: 'mongoose', min: '8.24.1', advisories: 'CVE-2026-42334, GHSA-664h-wqgq-64gw' },
+  { name: 'nanoid', min: '3.3.17', advisories: 'CVE-2026-67213' },
   { name: 'next', min: '16.2.11', advisories: 'CVE-2026-64641..64649' },
+  { name: 'payload', min: '3.87.1', advisories: 'CVE-2025-71329, CVE-2025-71330 (via image-size removal)' },
   { name: 'postcss', min: '8.5.18', advisories: 'CVE-2026-45623, GHSA-r28c-9q8g-f849, CVE-2026-41305' },
   { name: 'sharp', min: '0.35.0', advisories: 'GHSA-f88m-g3jw-g9cj' },
   { name: 'undici', min: '7.29.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729' },
@@ -28,6 +30,11 @@ const REQUIREMENTS = [
   { name: 'ws', min: '8.21.0', advisories: 'CVE-2026-48779, CVE-2026-45736' },
   { name: 'esbuild', min: '0.28.1', advisories: 'GHSA-g7r4-m6w7-qqqr' },
   { name: 'vitest', min: '4.1.0', advisories: 'GHSA-2r6h-8mf9-6hjj (found during remediation)' },
+]
+
+/** Packages that must be absent from the install tree (replaced upstream). */
+const FORBIDDEN = [
+  { name: 'image-size', advisories: 'CVE-2025-71329, CVE-2025-71330 — no patched release; Payload 3.87.1+ uses image-dimensions' },
 ]
 
 const compare = (a, b) => {
@@ -92,7 +99,10 @@ const collectInstalledVersions = (names) => {
   return found
 }
 
-const installed = collectInstalledVersions(REQUIREMENTS.map((r) => r.name))
+const installed = collectInstalledVersions([
+  ...REQUIREMENTS.map((r) => r.name),
+  ...FORBIDDEN.map((r) => r.name),
+])
 const failures = []
 
 console.log('Package'.padEnd(12) + 'Required'.padEnd(11) + 'Installed'.padEnd(20) + 'Status')
@@ -110,10 +120,20 @@ for (const { name, min, advisories } of REQUIREMENTS) {
   if (outdated.length > 0) failures.push(`${name} ${outdated.join(', ')} < ${min} — ${advisories}`)
 }
 
+for (const { name, advisories } of FORBIDDEN) {
+  const versions = [...(installed.get(name) ?? [])].sort(compare)
+  if (versions.length === 0) {
+    console.log(name.padEnd(12) + 'absent'.padEnd(11) + 'not installed'.padEnd(20) + 'OK')
+    continue
+  }
+  console.log(name.padEnd(12) + 'absent'.padEnd(11) + versions.join(', ').padEnd(20) + `FAIL (${versions.join(', ')})`)
+  failures.push(`${name} still installed (${versions.join(', ')}) — ${advisories}`)
+}
+
 console.log('-'.repeat(64))
 
 if (failures.length > 0) {
-  console.error(`\n${failures.length} package(s) below their fixed version:`)
+  console.error(`\n${failures.length} package(s) failed security requirements:`)
   for (const f of failures) console.error(`  - ${f}`)
   console.error('\nCheck the "overrides" block in package.json; Next.js and Payload pin')
   console.error('several of these exactly, so a plain upgrade will not move them.')
