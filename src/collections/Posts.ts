@@ -7,6 +7,10 @@ import { ImageGallery } from '@/blocks/richText/ImageGallery'
 import { PdfDownload } from '@/blocks/richText/PdfDownload'
 import { adminOnly, hiddenFromNonAdmins, staffAccess } from '@/access/authenticated'
 import { seoMetaEditorField } from '@/fields/seo'
+import {
+  burstWebsiteCacheAfterChange,
+  burstWebsiteCacheAfterDelete,
+} from '@/lib/cms/revalidateFrontend'
 
 function toSlug(input: string): string {
   return input
@@ -99,6 +103,8 @@ export const Posts: CollectionConfig = {
   },
   hooks: {
     beforeValidate: [fillSlugAndAuthor],
+    afterChange: [burstWebsiteCacheAfterChange],
+    afterDelete: [burstWebsiteCacheAfterDelete],
   },
   fields: [
     {

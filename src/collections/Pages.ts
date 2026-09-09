@@ -1,8 +1,16 @@
-import type { CollectionBeforeChangeHook, CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+import type {
+  CollectionBeforeChangeHook,
+  CollectionBeforeValidateHook,
+  CollectionConfig,
+} from 'payload'
 
 import { pageLayoutBlocks } from '@/blocks/pages'
 import { adminOnly, authenticatedAdmin, hiddenFromNonAdmins, isNonAdmin } from '@/access/authenticated'
 import { seoMetaEditorField } from '@/fields/seo'
+import {
+  burstWebsiteCacheAfterChange,
+  burstWebsiteCacheAfterDelete,
+} from '@/lib/cms/revalidateFrontend'
 
 const lockSlugOnUpdate: CollectionBeforeChangeHook = ({ data, originalDoc }) => {
   if (originalDoc && typeof originalDoc.slug === 'string') {
@@ -77,6 +85,8 @@ export const Pages: CollectionConfig = {
   hooks: {
     beforeValidate: [fillSeoDefaults],
     beforeChange: [lockSlugOnUpdate],
+    afterChange: [burstWebsiteCacheAfterChange],
+    afterDelete: [burstWebsiteCacheAfterDelete],
   },
   versions: {
     drafts: {

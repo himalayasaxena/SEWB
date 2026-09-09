@@ -1,6 +1,12 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalAfterChangeHook, GlobalConfig } from 'payload'
 
 import { staffAccess } from '@/access/authenticated'
+import { revalidateBlog } from '@/lib/cms/revalidateFrontend'
+
+const revalidateBlogSettingsAfterChange: GlobalAfterChangeHook = ({ doc }) => {
+  revalidateBlog()
+  return doc
+}
 
 export const BlogSettings: GlobalConfig = {
   slug: 'blog-settings',
@@ -11,6 +17,9 @@ export const BlogSettings: GlobalConfig = {
   access: {
     read: () => true,
     update: staffAccess,
+  },
+  hooks: {
+    afterChange: [revalidateBlogSettingsAfterChange],
   },
   fields: [
     {

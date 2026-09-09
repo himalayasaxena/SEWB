@@ -1,6 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
 import { staffAccess } from '@/access/authenticated'
+import {
+  burstWebsiteCacheAfterChange,
+  burstWebsiteCacheAfterDelete,
+} from '@/lib/cms/revalidateFrontend'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -19,6 +23,10 @@ export const Categories: CollectionConfig = {
     create: staffAccess,
     update: staffAccess,
     delete: staffAccess,
+  },
+  hooks: {
+    afterChange: [burstWebsiteCacheAfterChange],
+    afterDelete: [burstWebsiteCacheAfterDelete],
   },
   fields: [
     {

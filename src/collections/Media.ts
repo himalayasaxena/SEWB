@@ -1,6 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
 import { adminOnly, hiddenFromNonAdmins, staffAccess } from '@/access/authenticated'
+import {
+  burstWebsiteCacheAfterChange,
+  burstWebsiteCacheAfterDelete,
+} from '@/lib/cms/revalidateFrontend'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -19,6 +23,10 @@ export const Media: CollectionConfig = {
     create: staffAccess,
     update: staffAccess,
     delete: adminOnly,
+  },
+  hooks: {
+    afterChange: [burstWebsiteCacheAfterChange],
+    afterDelete: [burstWebsiteCacheAfterDelete],
   },
   fields: [
     {

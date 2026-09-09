@@ -12,6 +12,12 @@ import { isNoIndexEnabled, siteNoIndexRobots } from '@/lib/noIndexSite'
 import { canonicalBaseFromSiteUrl, getSiteBaseUrl, mediaAbsoluteUrl } from '@/lib/siteBaseUrl'
 import type { Footer as FooterGlobal } from '@/payload-types'
 
+/**
+ * Marketing pages must always read live Payload data. Without this, Next prerenders
+ * routes with Cache-Control: s-maxage=31536000 and admin publishes never appear until redeploy.
+ */
+export const dynamic = 'force-dynamic'
+
 /** Site-wide defaults; each route adds its own title/description via `buildPageMetadata` + CMS Page. */
 export async function generateMetadata(): Promise<Metadata> {
   const fallbackTitle = 'SEWB - Global Care'

@@ -1,6 +1,12 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalAfterChangeHook, GlobalConfig } from 'payload'
 
 import { adminOnly, hiddenFromNonAdmins, isNonAdmin } from '@/access/authenticated'
+import { revalidateSiteChrome } from '@/lib/cms/revalidateFrontend'
+
+const revalidateChromeAfterChange: GlobalAfterChangeHook = ({ doc }) => {
+  revalidateSiteChrome()
+  return doc
+}
 
 export const Site: GlobalConfig = {
   slug: 'site',
@@ -15,6 +21,9 @@ export const Site: GlobalConfig = {
       return true
     },
     update: adminOnly,
+  },
+  hooks: {
+    afterChange: [revalidateChromeAfterChange],
   },
   fields: [
     {
