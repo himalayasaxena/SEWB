@@ -44,6 +44,18 @@ export function burstWebsiteCache(): void {
   safeRevalidatePath('/robots.txt')
 }
 
+/** Header, footer, and site-wide metadata (frontend root layout). */
+export function revalidateSiteChrome(): void {
+  safeRevalidatePath('/', 'layout')
+  safeRevalidatePath('/sitemap.xml')
+  safeRevalidatePath('/robots.txt')
+}
+
+/** Blog listing and related routes after blog global changes. */
+export function revalidateBlog(): void {
+  safeRevalidatePath('/blog')
+}
+
 /** @deprecated Prefer `burstWebsiteCache` — kept as an alias for older call sites. */
 export const revalidateAllMarketingPages = burstWebsiteCache
 
