@@ -16,20 +16,20 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 
 /** @type {{ name: string, min: string, advisories: string }[]} */
 const REQUIREMENTS = [
-  { name: 'fast-uri', min: '3.1.5', advisories: 'CVE-2026-18446, CVE-2026-13676, CVE-2026-16221' },
+  { name: 'fast-uri', min: '3.1.8', advisories: 'CVE-2026-18446, CVE-2026-13676, CVE-2026-16221, GHSA fast-uri 3.1.7' },
   { name: 'immutable', min: '4.3.9', advisories: 'CVE-2026-59879, CVE-2026-59880' },
-  { name: 'js-yaml', min: '4.3.1', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550' },
+  { name: 'js-yaml', min: '4.3.2', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550, GHSA-2883-xcg3-v3hh' },
   { name: 'mongoose', min: '8.24.1', advisories: 'CVE-2026-42334, GHSA-664h-wqgq-64gw' },
   { name: 'nanoid', min: '3.3.17', advisories: 'CVE-2026-67213' },
-  { name: 'next', min: '16.2.11', advisories: 'CVE-2026-64641..64649' },
-  { name: 'payload', min: '3.87.1', advisories: 'CVE-2025-71329, CVE-2025-71330 (via image-size removal)' },
+  { name: 'next', min: '16.3.8', advisories: 'CVE-2026-64641..64649, GHSA-p293-qw3h-jr36' },
+  { name: 'payload', min: '3.90.2', advisories: 'CVE-2025-71329, CVE-2025-71330, GHSA-jg8r-5jh2-v2xj' },
   { name: 'postcss', min: '8.5.18', advisories: 'CVE-2026-45623, GHSA-r28c-9q8g-f849, CVE-2026-41305' },
-  { name: 'sharp', min: '0.35.0', advisories: 'GHSA-f88m-g3jw-g9cj' },
-  { name: 'undici', min: '7.29.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729' },
+  { name: 'sharp', min: '0.35.4', advisories: 'GHSA-f88m-g3jw-g9cj, GHSA-rgj7-g3m4-5g8c' },
+  { name: 'undici', min: '7.30.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729, GHSA undici 7.29.0' },
   { name: 'uuid', min: '11.1.1', advisories: 'CVE-2026-41907' },
   { name: 'ws', min: '8.21.0', advisories: 'CVE-2026-48779, CVE-2026-45736' },
   { name: 'esbuild', min: '0.28.1', advisories: 'GHSA-g7r4-m6w7-qqqr' },
-  { name: 'vitest', min: '4.1.0', advisories: 'GHSA-2r6h-8mf9-6hjj (found during remediation)' },
+  { name: 'vitest', min: '4.1.11', advisories: 'GHSA-2r6h-8mf9-6hjj, GHSA-82fw-gwwq-j7x9' },
 ]
 
 /** Packages that must be absent from the install tree (replaced upstream). */
