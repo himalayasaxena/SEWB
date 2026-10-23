@@ -1,6 +1,6 @@
-import Link from 'next/link'
-
 import type { HomeInfrastructureBlock } from '@/payload-types'
+
+import { Href } from '@/components/Href'
 
 import { mediaUrl } from '@/lib/mediaUrl'
 import { phpAsset } from '@/lib/phpAsset'
@@ -98,7 +98,7 @@ export function HomeInfrastructureSection({
                         </ul>
                       ) : null}
                       {tab1.ctaLabel ? (
-                        <Link href={tab1.ctaHref || '#'} className="primary-btn">
+                        <Href href={tab1.ctaHref || '#'} className="primary-btn">
                           {tab1.ctaLabel}{' '}
                           <img
                             src={phpAsset('assets/img/icons/left-arrow.png')}
@@ -106,7 +106,7 @@ export function HomeInfrastructureSection({
                             height={14}
                             alt=""
                           />{' '}
-                        </Link>
+                        </Href>
                       ) : null}
                     </div>
                   </div>
@@ -149,7 +149,7 @@ export function HomeInfrastructureSection({
                         </ul>
                       ) : null}
                       {tab2.ctaLabel ? (
-                        <Link href={tab2.ctaHref || '#'} className="primary-btn">
+                        <Href href={tab2.ctaHref || '#'} className="primary-btn">
                           {tab2.ctaLabel}{' '}
                           <img
                             src={phpAsset('assets/img/icons/left-arrow.png')}
@@ -157,7 +157,7 @@ export function HomeInfrastructureSection({
                             height={14}
                             alt=""
                           />
-                        </Link>
+                        </Href>
                       ) : null}
                     </div>
                   </div>

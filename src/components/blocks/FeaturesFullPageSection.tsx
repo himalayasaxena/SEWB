@@ -1,3 +1,4 @@
+import { Href } from '@/components/Href'
 import { FeaturesAosInit } from '@/components/pages/FeaturesAosInit'
 import { mediaUrl } from '@/lib/mediaUrl'
 import type { FeaturesFullPageBlock } from '@/payload-types'
@@ -161,12 +162,12 @@ export function FeaturesFullPageSection({
                 <p className="health-content">{smartHealth.paragraph1}</p>
                 <p className="health-content">{smartHealth.paragraph2}</p>
                 {smartHealth.ctaLabel && smartHealth.ctaHref ? (
-                  <a href={smartHealth.ctaHref} className="primary-btn mt-4">
+                  <Href href={smartHealth.ctaHref} className="primary-btn mt-4">
                     {smartHealth.ctaLabel}{' '}
                     {ctaArrow ? (
                       <img src={ctaArrow} width={14} height={14} alt="arrow" />
                     ) : null}
-                  </a>
+                  </Href>
                 ) : null}
               </div>
             </div>

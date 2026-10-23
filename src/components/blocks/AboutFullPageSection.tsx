@@ -1,3 +1,4 @@
+import { Href } from '@/components/Href'
 import { AboutImpactScript } from '@/components/pages/AboutImpactScript'
 import { mediaUrl } from '@/lib/mediaUrl'
 import type { AboutFullPageBlock, Media } from '@/payload-types'
@@ -356,7 +357,7 @@ export function AboutFullPageSection({
               <div className="about-impact-content-card">
                 <h3 id={impactId('aboutImpactTitle')}>{activeTab?.title ?? ''}</h3>
                 <p id={impactId('aboutImpactCopy')}>{activeTab?.copy ?? ''}</p>
-                <a href={linkHref} id={impactId('aboutImpactLink')} className="about-impact-link">
+                <Href href={linkHref} id={impactId('aboutImpactLink')} className="about-impact-link">
                   {linkLabel}
                   <img
                     src="/assets/img/icons/left-arrow.png"
@@ -365,7 +366,7 @@ export function AboutFullPageSection({
                     loading="lazy"
                     alt="left arrow"
                   />
-                </a>
+                </Href>
               </div>
             </div>
           </div>
@@ -411,19 +412,19 @@ export function AboutFullPageSection({
                       {(member.linkedin || member.twitter || member.emailHref) && (
                         <div className="team-member-social">
                           {member.linkedin ? (
-                            <a href={member.linkedin} className="social-link">
+                            <Href href={member.linkedin} className="social-link">
                               <i className="fab fa-linkedin"></i>
-                            </a>
+                            </Href>
                           ) : null}
                           {member.twitter ? (
-                            <a href={member.twitter} className="social-link">
+                            <Href href={member.twitter} className="social-link">
                               <i className="fab fa-twitter"></i>
-                            </a>
+                            </Href>
                           ) : null}
                           {member.emailHref ? (
-                            <a href={member.emailHref} className="social-link">
+                            <Href href={member.emailHref} className="social-link">
                               <i className="fas fa-envelope"></i>
-                            </a>
+                            </Href>
                           ) : null}
                         </div>
                       )}

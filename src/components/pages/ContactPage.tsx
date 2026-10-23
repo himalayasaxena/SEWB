@@ -67,12 +67,12 @@ export function ContactPage() {
                                       <div className="card-content">
                                           <h3 className="card-title">Email Us</h3>
                                           <p className="card-description">
-                                               support@sewb
+                                               <a href="mailto:support@sewb.ai">support@sewb.ai</a>
                                            </p>
                                           <br />
                                           <h3 className="card-title">Call Us</h3>
                                           <p className="card-description">
-                                              Phone: +61 07 3473 1700
+                                              Phone: <a href="tel:+610734731700">+61 07 3473 1700</a>
                                           </p>
                                           
                                       </div>

@@ -1,4 +1,6 @@
 import type { SecurityAuditBlock } from '@/payload-types'
+
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
 
 export function SecurityAuditSection({ block }: { block: SecurityAuditBlock }) {
@@ -61,12 +63,12 @@ export function SecurityAuditSection({ block }: { block: SecurityAuditBlock }) {
                 })}
               </div>
               {block.ctaLabel ? (
-                <a href={block.ctaHref ?? '#'} className="primary-btn">
+                <Href href={block.ctaHref ?? '#'} className="primary-btn">
                   {block.ctaLabel}{' '}
                   {arrow ? (
                     <img src={arrow} width={14} height={14} alt="" />
                   ) : null}
-                </a>
+                </Href>
               ) : null}
             </div>
           </div>

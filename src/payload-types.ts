@@ -3576,6 +3576,10 @@ export interface Footer {
     | null;
   contactEmail?: string | null;
   contactAddress?: string | null;
+  /**
+   * Google Maps or Apple Maps link for the office address. Opens in a new tab. Leave empty to open a Google Maps search for the address above.
+   */
+  contactMapUrl?: string | null;
   copyrightText?: string | null;
   rightsText?: string | null;
   termsLabel?: string | null;
@@ -3677,6 +3681,7 @@ export interface FooterSelect<T extends boolean = true> {
       };
   contactEmail?: T;
   contactAddress?: T;
+  contactMapUrl?: T;
   copyrightText?: T;
   rightsText?: T;
   termsLabel?: T;

@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 
 import { defaultNavigation } from '../src/lib/defaultNavigation.js'
 import { defaultFooterColumns, defaultFooterSocialLinks, defaultNewsletterPoints } from '../src/lib/defaultFooter.js'
+import { mapsSearchUrl } from '../src/lib/linkTargets.js'
 import config from '../src/payload.config.js'
 
 async function main() {
@@ -46,6 +47,7 @@ async function main() {
       socialLinks: defaultFooterSocialLinks.map((s) => ({ label: s.label, url: s.url })),
       contactEmail: 'support@sewb.ai',
       contactAddress: '3 Clunies Ross Court, Eight Mile Plains, QLD 4113, Australia',
+      contactMapUrl: mapsSearchUrl('3 Clunies Ross Court, Eight Mile Plains, QLD 4113, Australia'),
       copyrightText: 'Copyright © 2026 SEWB',
       rightsText: 'All Rights Reserved',
       termsLabel: 'Terms and Conditions',

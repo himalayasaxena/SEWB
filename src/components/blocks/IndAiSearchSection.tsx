@@ -1,4 +1,6 @@
 import type { IndAiSearchBlock, Media } from '@/payload-types'
+
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
 
 function DoctorCard({
@@ -55,9 +57,9 @@ function DoctorCard({
           Next available: <b>{doctor?.nextAvailableTime}</b>
         </p>
       </div>
-      <a href={doctor?.bookHref ?? '#'} className="btn-book btn-gradient">
+      <Href href={doctor?.bookHref ?? '#'} className="btn-book btn-gradient">
         Book Appointment
-      </a>
+      </Href>
     </div>
   )
 }

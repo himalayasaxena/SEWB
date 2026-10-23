@@ -231,10 +231,10 @@ export function InvitePage() {
           )}
 
           <div className={validation.isValid && !showFallback ? 'invite-hide' : ''}>
-            <a href={PLAY_STORE_URL} className="invite-btn invite-btn-secondary">
+            <a href={PLAY_STORE_URL} className="invite-btn invite-btn-secondary" target="_blank" rel="noopener noreferrer">
               Get it on Google Play
             </a>
-            <a href={APP_STORE_URL} className="invite-btn invite-btn-secondary">
+            <a href={APP_STORE_URL} className="invite-btn invite-btn-secondary" target="_blank" rel="noopener noreferrer">
               Download on App Store
             </a>
           </div>

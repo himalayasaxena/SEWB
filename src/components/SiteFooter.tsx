@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import type { Footer as FooterGlobal } from '@/payload-types'
 
+import { Href } from '@/components/Href'
 import {
   defaultFooterColumns,
   defaultFooterSocialLinks,
   defaultNewsletterPoints,
 } from '@/lib/defaultFooter'
+import { mapsSearchUrl } from '@/lib/linkTargets'
 
 const socialIconByLabel: Record<string, string> = {
   facebook: '/assets/img/icons/facebook.png',
@@ -32,6 +34,7 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
   const contactEmail = footer?.contactEmail?.trim() || 'support@sewb'
   const contactAddress =
     footer?.contactAddress?.trim() || '3 Clunies Ross Court, Eight Mile Plains, QLD 4113, Australia'
+  const contactMapUrl = footer?.contactMapUrl?.trim() || mapsSearchUrl(contactAddress)
   const copyrightText = footer?.copyrightText?.trim() || 'Copyright © 2026 SEWB'
   const rightsText = footer?.rightsText?.trim() || 'All Rights Reserved'
   const termsLabel = footer?.termsLabel?.trim() || 'Terms and Conditions'
@@ -95,14 +98,14 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
                   const icon = socialIconByLabel[label] || '/assets/img/icons/facebook.png'
                   return (
                     <li key={item?.id ?? `${label}-${i}`}>
-                      <a href={item?.url || 'javascript:;'} target="_blank" rel="noreferrer">
+                      <Href href={item?.url || '#'}>
                         <img
                           src={icon}
                           loading="lazy"
                           alt={`SEWB ${label || 'social'}`}
                           className="img-fluid"
                         />
-                      </a>
+                      </Href>
                     </li>
                   )
                 })}
@@ -115,7 +118,7 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
                   {(col?.links ?? []).map((link, j) =>
                     link?.label && link?.href ? (
                       <li key={link.id ?? `${link.href}-${j}`}>
-                        <Link href={link.href}>{link.label}</Link>
+                        <Href href={link.href}>{link.label}</Href>
                       </li>
                     ) : null,
                   )}
@@ -134,7 +137,7 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
                     alt="SEWB email"
                     className="img-fluid"
                   />
-                  <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                  <Href href={`mailto:${contactEmail}`}>{contactEmail}</Href>
                 </li>
                 <li className="address">
                   <img
@@ -142,10 +145,10 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
                     width={30}
                     height={30}
                     loading="lazy"
-                    alt="SEWB phone"
+                    alt="SEWB office"
                     className="img-fluid"
                   />
-                  <a href="javascript:;">{contactAddress}</a>
+                  <Href href={contactMapUrl}>{contactAddress}</Href>
                 </li>
               </ul>
             </div>
@@ -160,10 +163,10 @@ export function SiteFooter({ footer }: { footer?: FooterGlobal | null }) {
             <div className="col-lg-6 col-xl-6">
               <p className="copy-right text-end">
                 {rightsText}
-                <Link href={termsHref} className="pe-0">
+                <Href href={termsHref} className="pe-0">
                   {termsLabel}
-                </Link>
-                <Link href={privacyHref}>{privacyLabel}</Link>
+                </Href>
+                <Href href={privacyHref}>{privacyLabel}</Href>
               </p>
             </div>
           </div>

@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 
+import { externalAnchorProps } from '@/lib/linkTargets'
+
 /** Mirrors inline script from UI/about.php for impact tabs. */
 export function AboutImpactScript({ instanceKey }: { instanceKey?: string } = {}) {
   useEffect(() => {
@@ -38,7 +40,18 @@ export function AboutImpactScript({ instanceKey }: { instanceKey?: string } = {}
         if (impactStatLabel) impactStatLabel.textContent = this.dataset.impactStatLabel || ''
         if (impactStatValue) impactStatValue.textContent = this.dataset.impactStatValue || ''
         if (impactBottom) impactBottom.textContent = this.dataset.impactBottom || ''
-        if (impactLink) impactLink.href = this.dataset.impactLink || 'javascript:;'
+        if (impactLink) {
+          const next = this.dataset.impactLink || '#'
+          impactLink.href = next
+          const props = externalAnchorProps(next)
+          if (props.target) {
+            impactLink.target = props.target
+            impactLink.rel = props.rel ?? ''
+          } else {
+            impactLink.removeAttribute('target')
+            impactLink.removeAttribute('rel')
+          }
+        }
       })
     })
   }, [instanceKey])

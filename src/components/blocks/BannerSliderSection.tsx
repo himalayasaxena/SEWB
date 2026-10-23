@@ -1,5 +1,6 @@
 import type { BannerSliderBlock } from '@/payload-types'
 
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
 
 export function BannerSliderSection({ block }: { block: BannerSliderBlock }) {
@@ -32,14 +33,14 @@ export function BannerSliderSection({ block }: { block: BannerSliderBlock }) {
                         {slide.subtitle ? <p className="banner-subtitle">{slide.subtitle}</p> : null}
                         <div className="banner-actions">
                           {slide.primaryCta?.label ? (
-                            <a href={slide.primaryCta.href ?? '#'} className="primary-btn">
+                            <Href href={slide.primaryCta.href ?? '#'} className="primary-btn">
                               {slide.primaryCta.label}
-                            </a>
+                            </Href>
                           ) : null}
                           {slide.secondaryCta?.label ? (
-                            <a href={slide.secondaryCta.href ?? '#'} className="white-btn">
+                            <Href href={slide.secondaryCta.href ?? '#'} className="white-btn">
                               {slide.secondaryCta.label}
-                            </a>
+                            </Href>
                           ) : null}
                         </div>
                       </div>

@@ -1,4 +1,6 @@
 import type { IndAllInOneBlock } from '@/payload-types'
+
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
 
 export function IndAllInOneSection({ block }: { block: IndAllInOneBlock }) {
@@ -45,10 +47,10 @@ export function IndAllInOneSection({ block }: { block: IndAllInOneBlock }) {
                           ) : null,
                         )}
                       </ul>
-                      <a href={card?.learnMoreHref ?? '#'} className="learn-more">
+                      <Href href={card?.learnMoreHref ?? '#'} className="learn-more">
                         Learn More{' '}
                         {arrow ? <img src={arrow} loading="lazy" alt="" /> : null}
-                      </a>
+                      </Href>
                     </div>
                   </div>
                 )

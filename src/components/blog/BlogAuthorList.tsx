@@ -1,6 +1,7 @@
 import type { User } from '@/payload-types'
 
 import { editorDisplayName, editorPhotoUrl, editorSocialLinks } from '@/lib/cms/userAuthor'
+import { externalAnchorProps } from '@/lib/linkTargets'
 
 const AVATAR_FALLBACKS = ['/assets/img/icons/profile2.webp', '/assets/img/icons/profile3.webp'] as const
 
@@ -22,7 +23,7 @@ function SocialIcon({
 }) {
   if (!href?.trim()) return null
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className={active ? 'active' : undefined}>
+    <a href={href} {...externalAnchorProps(href)} className={active ? 'active' : undefined}>
       <img src={src} width={12} height={10} loading="lazy" alt={alt} className="one" />
     </a>
   )

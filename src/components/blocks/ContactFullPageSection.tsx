@@ -1,5 +1,7 @@
 import { ContactForm } from '@/components/ContactForm'
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
+import { mailtoHref, telHref } from '@/lib/linkTargets'
 import type { ContactFullPageBlock } from '@/payload-types'
 
 function linesWithBreaks(text: string | null | undefined) {
@@ -146,10 +148,18 @@ export function ContactFullPageSection({ block }: { block: ContactFullPageBlock 
                           ) : null}
                           <div className="card-content">
                             <h3 className="card-title">{reachCard.emailTitle}</h3>
-                            <p className="card-description">{reachCard.email}</p>
+                            <p className="card-description">
+                              {reachCard.email ? (
+                                <Href href={mailtoHref(reachCard.email)}>{reachCard.email}</Href>
+                              ) : null}
+                            </p>
                             <br />
                             <h3 className="card-title">{reachCard.phoneTitle}</h3>
-                            <p className="card-description">{reachCard.phone}</p>
+                            <p className="card-description">
+                              {reachCard.phone ? (
+                                <Href href={telHref(reachCard.phone)}>{reachCard.phone}</Href>
+                              ) : null}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -164,12 +174,10 @@ export function ContactFullPageSection({ block }: { block: ContactFullPageBlock 
                                 if (!link?.href) return null
                                 const icon = link.icon ? mediaUrl(link.icon) : ''
                                 return (
-                                  <a
+                                  <Href
                                     key={link.id ?? i}
                                     href={link.href}
                                     className="social-link"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
                                   >
                                     {icon ? (
                                       <img
@@ -182,7 +190,7 @@ export function ContactFullPageSection({ block }: { block: ContactFullPageBlock 
                                     ) : (
                                       link.label
                                     )}
-                                  </a>
+                                  </Href>
                                 )
                               })}
                             </div>

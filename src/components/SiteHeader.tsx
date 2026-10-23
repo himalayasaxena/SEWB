@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { Href } from '@/components/Href'
 import type { NavLink } from '@/lib/defaultNavigation'
 
 function normalizePath(pathname: string) {
@@ -65,9 +66,9 @@ export function SiteHeader({ navigation }: { navigation: NavLink[] }) {
         }
         return (
           <li key={`${item.label}-${i}`} className="nav-item">
-            <Link className={`nav-link ${active ? 'active' : ''}`} href={item.href}>
+            <Href className={`nav-link ${active ? 'active' : ''}`} href={item.href}>
               {item.label}
-            </Link>
+            </Href>
           </li>
         )
       })}

@@ -92,6 +92,15 @@ export const Footer: GlobalConfig = {
       defaultValue: '3 Clunies Ross Court, Eight Mile Plains, QLD 4113, Australia',
     },
     {
+      name: 'contactMapUrl',
+      type: 'text',
+      label: 'Office map / directions URL',
+      admin: {
+        description:
+          'Google Maps or Apple Maps link for the office address. Opens in a new tab. Leave empty to open a Google Maps search for the address above.',
+      },
+    },
+    {
       name: 'copyrightText',
       type: 'text',
       defaultValue: 'Copyright © 2026 SEWB',
