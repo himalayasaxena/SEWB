@@ -21,15 +21,15 @@ const REQUIREMENTS = [
   { name: 'js-yaml', min: '4.3.2', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550, GHSA-2883-xcg3-v3hh' },
   { name: 'mongoose', min: '8.24.1', advisories: 'CVE-2026-42334, GHSA-664h-wqgq-64gw' },
   { name: 'nanoid', min: '3.3.17', advisories: 'CVE-2026-67213' },
-  { name: 'next', min: '16.3.8', advisories: 'CVE-2026-64641..64649, GHSA-p293-qw3h-jr36' },
+  { name: 'next', min: '16.4.3', advisories: 'CVE-2026-64641..64649, GHSA-p293-qw3h-jr36, GHSA-2464-fhr4-w9xw, GHSA-p3m5-59mp-jv5r, GHSA-673q-mjm6-r5xr' },
   { name: 'payload', min: '3.90.2', advisories: 'CVE-2025-71329, CVE-2025-71330, GHSA-jg8r-5jh2-v2xj' },
   { name: 'postcss', min: '8.5.18', advisories: 'CVE-2026-45623, GHSA-r28c-9q8g-f849, CVE-2026-41305' },
-  { name: 'sharp', min: '0.35.4', advisories: 'GHSA-f88m-g3jw-g9cj, GHSA-rgj7-g3m4-5g8c' },
+  { name: 'sharp', min: '0.35.5', advisories: 'GHSA-f88m-g3jw-g9cj, GHSA-rgj7-g3m4-5g8c, GHSA-wq5f-xc86-pv6w' },
   { name: 'undici', min: '7.30.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729, GHSA undici 7.29.0' },
   { name: 'uuid', min: '11.1.1', advisories: 'CVE-2026-41907' },
   { name: 'ws', min: '8.21.0', advisories: 'CVE-2026-48779, CVE-2026-45736' },
   { name: 'esbuild', min: '0.28.1', advisories: 'GHSA-g7r4-m6w7-qqqr' },
-  { name: 'vitest', min: '4.1.11', advisories: 'GHSA-2r6h-8mf9-6hjj, GHSA-82fw-gwwq-j7x9' },
+  { name: 'vitest', min: '4.1.12', advisories: 'GHSA-2r6h-8mf9-6hjj, GHSA-82fw-gwwq-j7x9, GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp' },
 ]
 
 /** Packages that must be absent from the install tree (replaced upstream). */
