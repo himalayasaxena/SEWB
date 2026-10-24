@@ -16,7 +16,8 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 
 /** @type {{ name: string, min: string, advisories: string }[]} */
 const REQUIREMENTS = [
-  { name: 'fast-uri', min: '3.1.8', advisories: 'CVE-2026-18446, CVE-2026-13676, CVE-2026-16221, GHSA fast-uri 3.1.7' },
+  { name: 'fast-uri', min: '3.1.9', advisories: 'GHSA-w74x-v6f9-j3xg, GHSA-xhq7-xmqj-769h, GHSA-wjr9-j795-jxcr, GHSA-333x-w4r6-6crp' },
+  { name: 'happy-dom', min: '21.0.4', advisories: 'GHSA-834v-8h66-3h79' },
   { name: 'immutable', min: '4.3.9', advisories: 'CVE-2026-59879, CVE-2026-59880' },
   { name: 'js-yaml', min: '4.3.2', advisories: 'CVE-2026-59870, CVE-2026-59869, CVE-2026-53550, GHSA-2883-xcg3-v3hh' },
   { name: 'mongoose', min: '8.24.1', advisories: 'CVE-2026-42334, GHSA-664h-wqgq-64gw' },
@@ -25,11 +26,12 @@ const REQUIREMENTS = [
   { name: 'payload', min: '3.90.2', advisories: 'CVE-2025-71329, CVE-2025-71330, GHSA-jg8r-5jh2-v2xj' },
   { name: 'postcss', min: '8.5.18', advisories: 'CVE-2026-45623, GHSA-r28c-9q8g-f849, CVE-2026-41305' },
   { name: 'sharp', min: '0.35.5', advisories: 'GHSA-f88m-g3jw-g9cj, GHSA-rgj7-g3m4-5g8c, GHSA-wq5f-xc86-pv6w' },
-  { name: 'undici', min: '7.30.0', advisories: 'CVE-2026-13697, CVE-2026-14643, CVE-2026-15157, CVE-2026-16728, CVE-2026-16729, GHSA undici 7.29.0' },
+  { name: 'undici', min: '7.30.1', advisories: 'GHSA-4qv8-2p9j-2685, GHSA-f72v-6w45-q472, GHSA-xjj6-f33q-929c' },
   { name: 'uuid', min: '11.1.1', advisories: 'CVE-2026-41907' },
   { name: 'ws', min: '8.21.0', advisories: 'CVE-2026-48779, CVE-2026-45736' },
   { name: 'esbuild', min: '0.28.1', advisories: 'GHSA-g7r4-m6w7-qqqr' },
   { name: 'vitest', min: '4.1.12', advisories: 'GHSA-2r6h-8mf9-6hjj, GHSA-82fw-gwwq-j7x9, GHSA-qxg6-89mg-rqv8, GHSA-xp26-3454-mjgp' },
+  { name: 'zod', min: '4.6.6', advisories: 'GHSA-mrhx-c7xc-m3w5' },
 ]
 
 /** Packages that must be absent from the install tree (replaced upstream). */

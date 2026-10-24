@@ -52,12 +52,18 @@ describe('link targets', () => {
       createElement(ContactFullPageSection, {
         block: {
           blockType: 'contactFullPage',
+          hero: { titleLine1: 'Contact' },
+          intro: { title: 'Intro' },
+          officeCard: { title: 'Office', address: 'Address' },
           reachCard: {
             emailTitle: 'Email Us',
             email: 'Support@sewb.ai',
             phoneTitle: 'Phone Number',
             phone: '+61 07 3473 1700',
           },
+          social: { title: 'Follow' },
+          form: { title: 'Form' },
+          map: { title: 'Map', embedUrl: 'https://maps.google.com' },
         },
       }),
     )
