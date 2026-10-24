@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import { SiteFooter } from '@/components/SiteFooter'
 import { ContactFullPageSection } from '@/components/blocks/ContactFullPageSection'
+import { HomeAppDownloadSection } from '@/components/blocks/HomeAppDownloadSection'
 import {
   externalAnchorProps,
   isExternalHref,
@@ -95,5 +96,40 @@ describe('link targets', () => {
     expect(view.querySelector('a[href="/about"]')?.getAttribute('target')).toBeNull()
     expect(view.querySelector('a[href="https://maps.google.com"]')?.getAttribute('target')).toBe('_blank')
     expect(view.querySelector('a[href="https://facebook.com/sewb"]')?.getAttribute('target')).toBe('_blank')
+  })
+
+  it('shows home store buttons only when a label and URL are saved', async () => {
+    const hidden = await mount(
+      createElement(HomeAppDownloadSection, {
+        block: {
+          blockType: 'homeAppDownload',
+          titleLine1: 'Get the app',
+          appStoreLabel: 'Download on the App Store',
+          playStoreLabel: 'Get it on Google Play',
+        },
+      }),
+    )
+    expect(hidden.querySelector('a.primary-btn')).toBeNull()
+
+    const shown = await mount(
+      createElement(HomeAppDownloadSection, {
+        block: {
+          blockType: 'homeAppDownload',
+          titleLine1: 'Get the app',
+          appStoreLabel: 'Download on the App Store',
+          appStoreUrl: 'https://apps.apple.com/app/id1',
+          playStoreLabel: 'Get it on Google Play',
+          playStoreUrl: 'https://play.google.com/store/apps/details?id=ai.sewb',
+        },
+      }),
+    )
+    const apple = shown.querySelector('a[href="https://apps.apple.com/app/id1"]')
+    const google = shown.querySelector(
+      'a[href="https://play.google.com/store/apps/details?id=ai.sewb"]',
+    )
+    expect(apple?.textContent).toBe('Download on the App Store')
+    expect(google?.textContent).toBe('Get it on Google Play')
+    expect(apple?.getAttribute('target')).toBe('_blank')
+    expect(google?.getAttribute('target')).toBe('_blank')
   })
 })

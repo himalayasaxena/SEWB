@@ -2085,6 +2085,33 @@
     display: none;
   }
 
+  .app-download-section.home-app .app-mockup,
+  .app-download-section.two.feature .app-mockup {
+    position: relative;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    pointer-events: auto;
+  }
+
+  .app-download-section.home-app .app-mockup img,
+  .app-download-section.two.feature .app-mockup img {
+    width: min(100%, 420px);
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+
+  .app-download-section.home-app .app-content,
+  .app-download-section.two.feature .app-content {
+    max-width: none;
+  }
+
   .app-mockup.two {
     display: flex;
     position: relative;

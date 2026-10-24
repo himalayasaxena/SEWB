@@ -549,7 +549,7 @@ export function FeaturesFullPageSection({
         ) : null}
         <div className="container-fluid custom-container">
           <div className="row align-items-center">
-            <div className="col-lg-8">
+            <div className="col-lg-7 col-xl-6">
               <div className="app-content">
                 {appSection.badge ? (
                   <span className="section-badge text-uppercase">{appSection.badge}</span>
@@ -569,22 +569,20 @@ export function FeaturesFullPageSection({
                 ) : null}
               </div>
             </div>
-            <div className="col-lg-5">
-              <div className="app-mockup">
-                {appMockup ? (
-                  <img
-                    src={appMockup}
-                    width={1185}
-                    height={850}
-                    loading="lazy"
-                    alt=""
-                    className="img-fluid"
-                  />
-                ) : null}
-              </div>
-            </div>
           </div>
         </div>
+        {appMockup ? (
+          <div className="app-mockup">
+            <img
+              src={appMockup}
+              width={1185}
+              height={850}
+              loading="lazy"
+              alt=""
+              className="img-fluid"
+            />
+          </div>
+        ) : null}
       </section>
       ) : null}
 

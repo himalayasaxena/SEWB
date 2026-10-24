@@ -1123,8 +1123,17 @@ export interface HomeAppDownloadBlock {
       }[]
     | null;
   emphasisLine?: string | null;
+  /**
+   * Leave the App Store URL empty to hide this button. Store links open in a new tab.
+   */
+  appStoreLabel?: string | null;
+  appStoreUrl?: string | null;
+  /**
+   * Leave the Google Play URL empty to hide this button. Store links open in a new tab.
+   */
+  playStoreLabel?: string | null;
+  playStoreUrl?: string | null;
   mockupImage?: (string | null) | Media;
-  secondaryMockupImage?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'homeAppDownload';
@@ -1739,6 +1748,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -2848,8 +2858,11 @@ export interface HomeAppDownloadBlockSelect<T extends boolean = true> {
         id?: T;
       };
   emphasisLine?: T;
+  appStoreLabel?: T;
+  appStoreUrl?: T;
+  playStoreLabel?: T;
+  playStoreUrl?: T;
   mockupImage?: T;
-  secondaryMockupImage?: T;
   id?: T;
   blockName?: T;
 }
@@ -3418,6 +3431,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:

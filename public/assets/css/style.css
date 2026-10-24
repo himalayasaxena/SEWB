@@ -6008,11 +6008,45 @@ Gallery Page
 }
 
 .app-download-section.two.feature .app-content {
-  margin-bottom: 60px;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 4;
 }
 
-.app-download-section.two.feature .app-content .app-mockup img {
-  max-height: 830px;
+.app-download-section.two.feature,
+.app-download-section.home-app {
+  overflow: hidden;
+}
+
+.app-download-section.two.feature .app-mockup,
+.app-download-section.home-app .app-mockup {
+  position: absolute;
+  right: -2%;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: min(62%, 900px);
+  height: auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.app-download-section.two.feature .app-mockup img,
+.app-download-section.home-app .app-mockup img {
+  width: 118%;
+  max-width: none;
+  height: 118%;
+  margin: 0 -4% 0 0;
+  object-fit: cover;
+  object-position: 70% center;
+}
+
+.app-download-section.home-app .app-content {
+  position: relative;
+  z-index: 4;
 }
 
 /* =================================================

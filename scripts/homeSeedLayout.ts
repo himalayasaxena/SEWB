@@ -155,7 +155,9 @@ export async function buildHomeSeedBlocks(
       },
     ],
     emphasisLine: 'Get the SEWB app today.',
-    ...(appMock ? { mockupImage: appMock, secondaryMockupImage: appMock } : {}),
+    appStoreLabel: 'Download on the App Store',
+    playStoreLabel: 'Get it on Google Play',
+    ...(appMock ? { mockupImage: appMock } : {}),
   }
 
   const faq: HomeFaqBlock = {

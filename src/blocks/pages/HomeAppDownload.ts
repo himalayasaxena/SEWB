@@ -35,12 +35,34 @@ export const HomeAppDownload: Block = {
       type: 'text',
       label: 'Bold closing line (e.g. Get the app)',
     },
-    { name: 'mockupImage', type: 'upload', relationTo: 'media' },
     {
-      name: 'secondaryMockupImage',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Secondary decorative mockup (optional)',
+      name: 'appStoreLabel',
+      type: 'text',
+      label: 'App Store button label',
+      defaultValue: 'Download on the App Store',
+      admin: {
+        description: 'Leave the App Store URL empty to hide this button. Store links open in a new tab.',
+      },
     },
+    {
+      name: 'appStoreUrl',
+      type: 'text',
+      label: 'App Store URL',
+    },
+    {
+      name: 'playStoreLabel',
+      type: 'text',
+      label: 'Google Play button label',
+      defaultValue: 'Get it on Google Play',
+      admin: {
+        description: 'Leave the Google Play URL empty to hide this button. Store links open in a new tab.',
+      },
+    },
+    {
+      name: 'playStoreUrl',
+      type: 'text',
+      label: 'Google Play URL',
+    },
+    { name: 'mockupImage', type: 'upload', relationTo: 'media', label: 'App mockup' },
   ],
 }

@@ -1,7 +1,19 @@
 import type { HomeAppDownloadBlock } from '@/payload-types'
 
+import { Href } from '@/components/Href'
 import { mediaUrl } from '@/lib/mediaUrl'
 import { phpAsset } from '@/lib/phpAsset'
+
+function storeButton(label: string | null | undefined, href: string | null | undefined) {
+  const text = label?.trim()
+  const url = href?.trim()
+  if (!text || !url) return null
+  return (
+    <Href href={url} className="primary-btn">
+      {text}
+    </Href>
+  )
+}
 
 export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock }) {
   const bg =
@@ -9,11 +21,12 @@ export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock 
       mediaUrl(block.backgroundImage)
     : phpAsset('assets/img/features/product-bg.webp')
   const mockup = block.mockupImage ? mediaUrl(block.mockupImage) : ''
-  const mockup2 = block.secondaryMockupImage ? mediaUrl(block.secondaryMockupImage) : ''
   const paragraphs = block.paragraphs ?? []
+  const appStoreButton = storeButton(block.appStoreLabel, block.appStoreUrl)
+  const playStoreButton = storeButton(block.playStoreLabel, block.playStoreUrl)
 
   return (
-    <section className="app-download-section two" id="app">
+    <section className="app-download-section two home-app" id="app">
       <img
         src={bg}
         width={950}
@@ -24,7 +37,7 @@ export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock 
       />
       <div className="container-fluid custom-container">
         <div className="row align-items-center">
-          <div className="col-lg-7">
+          <div className="col-lg-7 col-xl-6">
             <div className="app-content">
               {block.badge ? <span className="section-badge">{block.badge}</span> : null}
               <h2 className="section-title text-white">
@@ -48,20 +61,19 @@ export function HomeAppDownloadSection({ block }: { block: HomeAppDownloadBlock 
               {block.emphasisLine ? (
                 <p className="section-description text-white fw-bold">{block.emphasisLine}</p>
               ) : null}
-            </div>
-          </div>
-          <div className="col-lg-5">
-            <div className="app-mockup">
-              {mockup ? (
-                <img src={mockup} width={1185} height={850} loading="lazy" alt="" className="img-fluid" />
+              {appStoreButton || playStoreButton ? (
+                <div className="d-flex flex-wrap gap-3 mt-4">
+                  {appStoreButton}
+                  {playStoreButton}
+                </div>
               ) : null}
             </div>
           </div>
         </div>
       </div>
-      {mockup2 ? (
-        <div className="app-mockup two">
-          <img src={mockup2} width={850} height={550} loading="lazy" alt="" className="img-fluid" />
+      {mockup ? (
+        <div className="app-mockup">
+          <img src={mockup} width={1185} height={850} loading="lazy" alt="" className="img-fluid" />
         </div>
       ) : null}
     </section>
